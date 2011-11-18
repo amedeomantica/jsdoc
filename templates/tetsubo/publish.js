@@ -51,12 +51,12 @@ helper.createLink = function(doclet) {
      */
     publish = function(data, opts) {
         var out = '',
-            containerTemplate = template.render(fs.readFileSync(__dirname + '/templates/default/tmpl/container.tmpl'));
+            containerTemplate = template.render(fs.readFileSync(__dirname + '/templates/tetsubo/tmpl/container.tmpl'));
 
         function render(tmpl, partialData) {
             var renderFunction = arguments.callee.cache[tmpl];
             if (!renderFunction) {
-                renderFunction = arguments.callee.cache[tmpl] = template.render(fs.readFileSync(__dirname + '/templates/default/tmpl/'+tmpl));
+                renderFunction = arguments.callee.cache[tmpl] = template.render(fs.readFileSync(__dirname + '/templates/tetsubo/tmpl/'+tmpl));
             }
             partialData.render = arguments.callee;
             partialData.find = find;
@@ -220,7 +220,7 @@ helper.createLink = function(doclet) {
         fs.mkPath(outdir);
 
         // copy static files to outdir
-        var fromDir = __dirname + '/templates/default/static',
+        var fromDir = __dirname + '/templates/tetsubo/static',
             staticFiles = fs.ls(fromDir, 3);
 
         staticFiles.forEach(function(fileName) {
@@ -288,7 +288,7 @@ helper.createLink = function(doclet) {
 
         var classNames = find({kind: 'class'});
         if (classNames.length) {
-            nav = nav + '<h3>Classes</h3><ul>';
+            nav = nav + '<h3>Prototypes</h3><ul>';
             classNames.forEach(function(c) {
                 var moduleSameName = find({kind: 'module', longname: c.longname});
                 if (moduleSameName.length) {
@@ -350,7 +350,7 @@ helper.createLink = function(doclet) {
 
         for (var longname in helper.longnameToUrl) {
             var classes = find({kind: 'class', longname: longname});
-            if (classes.length) generate('Class: '+classes[0].name, classes, helper.longnameToUrl[longname]);
+            if (classes.length) generate('Prototype: '+classes[0].name, classes, helper.longnameToUrl[longname]);
 
             var modules = find({kind: 'module', longname: longname});
             if (modules.length) generate('Module: '+modules[0].name, modules, helper.longnameToUrl[longname]);

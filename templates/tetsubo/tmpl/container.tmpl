@@ -123,9 +123,9 @@
             var classes = find({kind: 'class', memberof: doc.longname}); 
             if (doc.kind !== 'globalobj' && classes && classes.length) { 
         ?>
-            
-            <h3 class="subsection-title">Classes</h3>
-            
+
+            <h3 class="subsection-title">Prototypes</h3>
+
             <dl><?js
                 classes.forEach(function(c) {
             ?>
