@@ -4,11 +4,46 @@
         template = require('underscore/template'),
         fs = require('fs'),
         helper = require('jsdoc/util/templateHelper'),
+        dictionary = require('jsdoc/tag/dictionary'),
         scopeToPunc = { 'static': '.', 'inner': '~', 'instance': '#' };
 
         template.settings.evaluate    = /<\?js([\s\S]+?)\?>/g;
         template.settings.interpolate = /<\?js=([\s\S]+?)\?>/g;
-    
+
+// Customizing so that we have reasonably-good-filenames
+function getNamespace(kind) {
+    if (dictionary.isNamespace(kind)) {
+        return kind+':';
+    }
+    return '';
+}
+
+
+var containers = ['class', 'module', 'external', 'namespace', 'mixin'];
+/**
+ * Turn a doclet into a URL.
+ */
+helper.createLink = function(doclet) {
+    var url = '', longname, filename;
+
+    if (containers.indexOf(doclet.kind) < 0) {
+        longname = doclet.longname;
+        filename = longname.replace(/[^a-zA-Z 0-9 ]+/g,"_");
+
+        url = filename + helper.fileExtension + '#' + getNamespace(doclet.kind) + doclet.name;
+    }
+    else {
+        longname = doclet.longname;
+        filename = longname.replace(/[^a-zA-Z 0-9 ]+/g,"_");
+
+        url = filename + helper.fileExtension;
+    }
+
+    return url;
+};
+
+//END Customizing so that we have reasonably-good-filenames
+
     /**
         @global
         @param {TAFFY} data See <http://taffydb.com/>.
@@ -198,8 +233,6 @@
             var url = helper.longnameToUrl[longname];
             return url? '<a href="'+url+'">'+(linktext || longname)+'</a>' : (linktext || longname);
         }
-
-        var containers = ['class', 'module', 'external', 'namespace', 'mixin'];
 
         data.forEach(function(doclet) {
             var url = helper.createLink(doclet);
