@@ -14,45 +14,72 @@
 <body>
 
 <div id="main">
-    
+
+    <div id="branding" class="container fix">
+    <div class="texture">
+
+        <div class="content">
+            <a href="http://tetsubo.org/docs/api-reference/api-feedback/">Leave feedback on this page!</a>
+
+            <div class="content-pad">
+<div class="branding_wrap">
+    <a class="mainlogo-link" href="http://tetsubo.org" title="Tetsubo"><img class="mainlogo-img" src="http://tetsubo.org/wp-content/uploads/2011/11/new-tetsubo-org.png" alt="Tetsubo"></a>
+
+    <div class="icons" style="bottom: 21px; right: 1px;">
+
+                <a target="_blank" href="http://tetsubo.org/feed/" class="rsslink"></a>
+
+
+    </div>
+</div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav>
+    <?js= nav ?>
+</nav>
+
+
     <h1 class="page-title"><?js= title ?></h1>
-    
+
     <?js
         docs.forEach(function(doc, i) {
     ?>
-    
+
     <section>
-     
+
     <header>
         <h2><?js
             if (doc.ancestors && doc.ancestors.length) {
                 print('<span class="ancestors">');
-                print( doc.ancestors.join('') ); 
+                print( doc.ancestors.join('') );
                 print('</span>' + doc.name);
             }
             else {
                 print(doc.name)
             }
-            
+
             if (doc.variation) {
-               print('<sup class="variation">'+doc.variation+'</sup>'); 
+               print('<sup class="variation">'+doc.variation+'</sup>');
             }
-            
+
          ?></h2>
         <?js
             if (doc.classdesc) {
-               print('<p class="class-description">'+doc.classdesc+'</p>'); 
+               print('<p class="class-description">'+doc.classdesc+'</p>');
             }
         ?>
-    </header>  
-    
+    </header>
+
     <article>
         <div class="container-overview">
         <?js
         if (doc.kind === 'module' && doc.module) {
             print(render('method.tmpl', doc.module));
         }
-        
+
         if (doc.kind === 'class') {
             print(render('method.tmpl', doc));
         }
@@ -69,6 +96,72 @@
             }
         }
         ?>
+        <!-- Summary tables -->
+        <?js
+            var members = find({kind: 'member', memberof: doc.longname});
+            if (title === 'Globals') {
+                members = find({kind: 'member', memberof: {isUndefined: true}});
+            }
+            if (members && members.length && members.forEach) {
+        ?>
+
+            <h3 class="subsection-title">Properties summary</h3>
+
+
+            <table class="zebra-striped">
+                <?js
+                members.forEach(function(m) {
+                    print(render('propertylist_table.tmpl', m));
+                });
+            ?>
+            </table>
+
+        <?js } ?>
+
+        <?js
+            var methods = find({kind: 'function', memberof: doc.longname});
+            if (title === 'Globals') {
+                methods = find({kind: 'function', memberof: {isUndefined: true}});
+            }
+            if (methods && methods.length && methods.forEach) {
+        ?>
+
+            <h3 class="subsection-title">Method summary</h3>
+
+            <table class="zebra-striped">
+                <?js
+                methods.forEach(function(m) {
+                    print(render('propertylist_table.tmpl', m));
+                });
+            ?>
+            </table>
+
+        <?js } ?>
+
+        <?js
+            var styles = find({kind: 'style', memberof: doc.longname});
+            if (title === 'Globals') {
+                styles = find({kind: 'style', memberof: {isUndefined: true}});
+            }
+            if (styles && styles.length && styles.forEach) {
+        ?>
+            <h3 class="subsection-title">Styles summary</h3>
+
+            <table class="zebra-striped">
+                <thead>
+                    <tr><td>Name</td><td>Description</td></tr>
+                </thead>
+                <tbody>
+
+                <?js
+                styles.forEach(function(s) {
+                    print(render('propertylist_table.tmpl', s));
+                });
+            ?>
+            </tbody>
+            </table>
+
+            <?js } ?>
         </div>
         
         <?js
@@ -185,26 +278,13 @@
             
             <dl><?js
                 methods.forEach(function(m) {
+                    if (doc.kind === 'class') {
+                        m.className = doc.name;
+                    }
                     print(render('method.tmpl', m));
                 });
             ?></dl>
-            
         <?js } ?>
-        
-        <?js
-            var typedefs = find({kind: 'typedef', memberof: doc.longname}); 
-            if (typedefs && typedefs.length && typedefs.forEach) { 
-        ?>
-            
-            <h3 class="subsection-title">TypeDefs</h3>
-            
-            <dl><?js
-                typedefs.forEach(function(e) {
-                    print(render('members.tmpl', e));
-                });
-            ?></dl>
-        <?js } ?>
-        
         <?js
             var events = find({kind: 'event', memberof: doc.longname}); 
             if (events && events.length && events.forEach) { 
@@ -224,14 +304,10 @@
     <?js }); ?>
 </div>
 
-<nav>
-    <?js= nav ?>
-</nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/micmath/jsdoc">JSDoc 3</a> on <?js= (new Date()) ?>
 </footer>
 
 <script> sh_highlightDocument(); </script>
