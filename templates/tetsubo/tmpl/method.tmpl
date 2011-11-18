@@ -1,34 +1,34 @@
 <dt>
-    <h4 class="name" id="<?js= id ?>"><?js= this.attribs + (kind == 'class'? 'new ':'') + name + this.signature ?></h4>
-    
+    <a name="<?js= id ?>"><h4 class="name" id="<?js= id ?>"><?js if(this.scope === 'static' && this.className) { print( this.className + '.'); } ?><?js= name + (kind == 'class'? '.create()':this.signature)  ?></h4></a>
+
     <?js if (this.summary) { ?>
     <p class="summary"><?js= summary ?></p>
     <?js } ?>
 </dt>
 <dd>
-    
+
     <?js if (this.description) { ?>
     <p class="description">
         <?js= this.description ?>
     </p>
     <?js } ?>
-    
+
     <?js
     if (this['this']) {
         print('<h5>This:</h5>');
         print( '<ul><li>'+linkto(this['this'], this['this'])+'</li></ul>' );
     }
     ?>
-    
+
     <?js
     if (this.params && params.length) {
         print('<h5>Parameters:</h5>');
         print( render('params.tmpl', params) );
     }
     ?>
-    
+
     <?js print(render('details.tmpl', this)); ?>
-    
+
     <?js if (this.fires && fires.length) { ?>
     <h5>Fires:</h5>
     <ul><?js
@@ -37,7 +37,7 @@
         });
     ?></ul>
     <?js } ?>
-    
+
     <?js if (this.exceptions && exceptions.length) { ?>
     <h5>Throws:</h5>
     <?js if (exceptions.length > 1) { ?><ul><?js
@@ -49,7 +49,7 @@
             print( render('exceptions.tmpl', r) );
         });
     } } ?>
-    
+
     <?js if (this.returns && returns.length) { ?>
     <h5>Returns:</h5>
     <?js if (returns.length > 1) { ?><ul><?js
@@ -61,7 +61,7 @@
             print( render('returns.tmpl', r) );
         });
     } } ?>
-    
+
     <?js
     if (this.examples && examples.length) {
         print('<h5>Example' + (examples.length > 1? 's':'') + '</h5>');
