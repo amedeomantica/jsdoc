@@ -1,8 +1,16 @@
-body
-{
-	font: 14px "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+	font: 14px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans serif;
 	line-height: 130%;
 	color: #000;
+	padding: 20px;
+	background-color: hsla(0,0%,98%,1);
 }
 
 a {
@@ -17,10 +25,14 @@ a:active {
     color: #444;
 }
 
-header
-{
+#branding {
+    padding: 10px;
+    margin-bottom: 30px;
+	border-bottom: 4px double hsla(0,0%,90%,1);
+}
+
+header {
 	display: block;
-	padding: 6px 4px;
 }
 
 .class-description {
@@ -35,18 +47,53 @@ header
     width: 100%;
 }
 
-section
-{
-	display: block;
-	
-	background-color: #fff;
-	padding: 12px 24px;
-    border-bottom: 1px solid #ccc;
-    margin-right: 240px;
+.page-title {
+    margin: 10px 0;
+}
+
+.zebra-striped {
+    margin: 10px 0 30px 0;
+    border: 1px solid hsla(0,0%,90%,1);
+    border-spacing: 0;
+}
+.zebra-striped td {
+    padding: 5px;
+    vertical-align: top;
+}
+.zebra-striped tr:nth-child(even) {
+    background-color: hsla(0,0%,94%,1);
+}
+
+
+
+section {
+	display: block;	
+	padding: 10px 20px;
+    margin-right: 270px;
+}
+
+section a {
+    color: hsl(200,100%,40%);
+    text-decoration: none;
+}
+section a:hover {
+    color: hsl(200,100%,20%);
+}
+section a:active {
+    color: hsl(200,100%,0%);
 }
 
 .variation {
     display: none;
+}
+
+article > dl > dd {
+    border-bottom: 1px dashed hsl(0,0%,85%);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+article .name {
+    padding-top: 20px;
 }
 
 .optional:after {
@@ -57,19 +104,13 @@ section
 	font-weight: lighter;
 }
 
-nav
-{
+nav {
 	display: block;
-	float: left;
-    margin-left: -230px;
-    margin-top: 28px;
-    width: 220px;
-    border-left: 1px solid #ccc;
-    padding-left: 9px;
+	float: right;
+    width: 250px;
 }
 
 nav ul {
-    font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif;
     font-size: 100%;
     line-height: 17px;
     padding:0;
@@ -78,23 +119,35 @@ nav ul {
 }
 
 nav h3 {
-    margin-top: 12px;
+    margin: 20px 10px 10px 10px;
 }
 
-nav li {
-    margin-top: 6px;
+nav ul li:first-child a {
+    border-radius: 6px 6px 0 0;
+}
+nav ul li:last-child a {
+    border-radius: 0 0 6px 6px;
 }
 
 nav a {
-    color: #5C5954;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: hsl(200,100%,40%);
+    border-top: 1px solid hsla(0,0%,100%,.7);
+    border-bottom: 1px solid hsla(0,0%,0%,.1);
+    background-color: hsla(0,0%,94%,1);
 }
 
 nav a:visited {
-    color: #5C5954;
+    color: hsl(200,20%,40%);
 }
-
+nav a:hover {
+    background-color: hsla(0,0%,97%,1);
+}
 nav a:active {
-    color: #5C5954;
+    border-top: 1px solid hsla(0,0%,100%,0);
+    background-color: hsla(0,0%,90%,1);
 }
 
 footer {
@@ -110,12 +163,13 @@ h1
 	font-size: 200%;
 	font-weight: bold;
 	letter-spacing: -0.01em;
-	margin: 6px 0 9px 0;
+	margin: 0px 0 9px 0;
 }
 
 h2
 {
 	font-size: 170%;
+	line-height: 1;
 	font-weight: bold;
 	letter-spacing: -0.01em;
 	margin: 6px 0 3px 0;
@@ -126,7 +180,6 @@ h3
 	font-size: 150%;
 	font-weight: bold;
 	letter-spacing: -0.01em;
-	margin-top: 16px;
 	margin: 6px 0 3px 0;
 }
 
@@ -145,7 +198,7 @@ h5, .container-overview .subsection-title
 	font-size: 120%;
 	font-weight: bold;
 	letter-spacing: -0.01em;
-	margin: 8px 0 3px -16px;
+	margin: 8px 0 3px 0px;
 }
 
 h6
@@ -159,7 +212,7 @@ h6
 .ancestors { color: #999; }
 .ancestors a
 {
-    color: #999 !important;
+    color: #aaa !important;
     text-decoration: none;
 }
 
