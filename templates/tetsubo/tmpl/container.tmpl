@@ -138,6 +138,9 @@
             <table class="zebra-striped">
                 <?js
                 methods.forEach(function(m) {
+                    if (doc.kind === 'class' || doc.kind === 'external') {
+                        m.className = doc.name;
+                    }
                     print(render('propertylist_table.tmpl', m));
                 });
             ?>
