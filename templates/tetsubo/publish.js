@@ -44,6 +44,17 @@ helper.createLink = function(doclet) {
 
 //END Customizing so that we have reasonably-good-filenames
 
+    var alphabetical = function(m1, m2){
+        var nameA = m1.name.toLowerCase(), nameB = m2.name.toLowerCase();
+        if (nameA < nameB) {
+            return -1;
+        }
+        if (nameA == nameB) {
+            return 0;
+        }
+        return 1
+    };
+
     /**
         @global
         @param {TAFFY} data See <http://taffydb.com/>.
@@ -288,6 +299,7 @@ helper.createLink = function(doclet) {
 
         var classNames = find({kind: 'class'});
         if (classNames.length) {
+            classNames.sort(alphabetical);
             nav = nav + '<h3>Prototypes</h3><ul>';
             classNames.forEach(function(c) {
                 var moduleSameName = find({kind: 'module', longname: c.longname});
@@ -303,8 +315,21 @@ helper.createLink = function(doclet) {
             nav = nav + '</ul>';
         }
 
+        var externalNames = find({kind: 'external'});
+        if (externalNames.length) {
+            externalNames.sort(alphabetical);
+            nav = nav + '<h3>Externals</h3><ul>';
+            externalNames.forEach(function(e) {
+                if ( !seen.hasOwnProperty(e.longname) ) nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
+                seen[e.longname] = true;
+            });
+
+            nav = nav + '</ul>';
+        }
+
         var namespaceNames = find({kind: 'namespace'});
         if (namespaceNames.length) {
+            namespaceNames.sort(alphabetical);
             nav = nav + '<h3>Namespaces</h3><ul>';
             namespaceNames.forEach(function(n) {
                 if ( !seen.hasOwnProperty(n.longname) ) nav += '<li>'+linkto(n.longname, n.name)+'</li>';
@@ -327,6 +352,7 @@ helper.createLink = function(doclet) {
 
         var mixinNames = find({kind: 'mixin'});
         if (mixinNames.length) {
+            mixinNames.sort(alphabetical);
             nav = nav + '<h3>Mixins</h3><ul>';
             mixinNames.forEach(function(m) {
                 if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
@@ -339,6 +365,7 @@ helper.createLink = function(doclet) {
         var globalNames = find({kind: ['member', 'function', 'constant', 'typedef'], 'memberof': {'isUndefined': true}});
 
         if (globalNames.length) {
+            globalNames.sort(alphabetical);
             nav = nav + '<h3>Global</h3><ul>';
             globalNames.forEach(function(g) {
                 if ( g.kind !== 'typedef' && !seen.hasOwnProperty(g.longname) ) nav += '<li>'+linkto(g.longname, g.name)+'</li>';

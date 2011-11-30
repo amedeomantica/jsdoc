@@ -114,7 +114,23 @@
             if (title === 'Globals') {
                 methods = find({kind: 'function', memberof: {isUndefined: true}});
             }
-            if (methods && methods.length && methods.forEach) {
+            if (methods && methods.length && methods.forEach && methods.sort) {
+                methods.sort(function(m1, m2){
+                    if ( m1.scope === 'static' && m2.scope !== 'static') {
+                        return -1
+                    } else if (m2.scope === 'static' && m1.scope !== 'static') {
+                        return 1;
+                    }
+
+                    var nameA = m1.name.toLowerCase(), nameB = m2.name.toLowerCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA == nameB) {
+                        return 0;
+                    }
+                    return 1
+                });
         ?>
 
             <h3 class="subsection-title">Method summary</h3>
@@ -204,8 +220,18 @@
         ?>
         
         <?js
-            var classes = find({kind: 'class', memberof: doc.longname}); 
-            if (doc.kind !== 'globalobj' && classes && classes.length) { 
+            var classes = find({kind: 'class', memberof: doc.longname});
+            if (doc.kind !== 'globalobj' && classes && classes.length) {
+                classes.sort(function(m1, m2){
+                    var nameA = m1.name.toLowerCase(), nameB = m2.name.toLowerCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA == nameB) {
+                        return 0;
+                    }
+                    return 1
+                });
         ?>
 
             <h3 class="subsection-title">Prototypes</h3>
@@ -262,7 +288,23 @@
             if (title === 'Globals') {
                 methods = find({kind: 'function', memberof: {isUndefined: true}});
             }
-            if (methods && methods.length && methods.forEach) { 
+            if (methods && methods.length && methods.forEach) {
+                methods.sort(function(m1, m2){
+                    if ( m1.scope === 'static' && m2.scope !== 'static') {
+                        return -1
+                    } else if (m2.scope === 'static' && m1.scope !== 'static') {
+                        return 1;
+                    }
+
+                    var nameA = m1.name.toLowerCase(), nameB = m2.name.toLowerCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA == nameB) {
+                        return 0;
+                    }
+                    return 1
+                });
         ?>
             
             <h3 class="subsection-title">Methods</h3>
