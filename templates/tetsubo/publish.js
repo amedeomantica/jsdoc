@@ -274,28 +274,18 @@ helper.createLink = function(doclet) {
 
         var nav = '',
             seen = {};
-
-        var moduleNames = find({kind: 'module'});
-        if (moduleNames.length) {
-            nav = nav + '<h3>Modules</h3><ul>';
-            moduleNames.forEach(function(m) {
-                if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
-                seen[m.longname] = true;
-            });
-
-            nav = nav + '</ul>';
-        }
-
-        var externalNames = find({kind: 'external'});
-        if (externalNames.length) {
-            nav = nav + '<h3>Externals</h3><ul>';
-            externalNames.forEach(function(e) {
-                if ( !seen.hasOwnProperty(e.longname) ) nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
-                seen[e.longname] = true;
-            });
-
-            nav = nav + '</ul>';
-        }
+//
+//        var moduleNames = find({kind: 'module'});
+//        if (moduleNames.length) {
+//            moduleNames.sort(alphabetical);
+//            nav = nav + '<h3>Modules</h3><ul>';
+//            moduleNames.forEach(function(m) {
+//                if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
+//                seen[m.longname] = true;
+//            });
+//
+//            nav = nav + '</ul>';
+//        }
 
         var classNames = find({kind: 'class'});
         if (classNames.length) {
