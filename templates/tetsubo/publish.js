@@ -145,6 +145,15 @@ helper.createLink = function(doclet) {
             f.signature = (f.signature || '') + '<span class="type-signature">'+htmlsafe(types.length? ' :'+types.join('|') : '')+'</span>';
         }
 
+        function removeQuotesFromReelModule(module) {
+            var moduleName = module.name;
+            if(moduleName.indexOf(".reel\"") !== -1) {
+                moduleName = moduleName.replace(".reel\"", ".reel");
+                moduleName = moduleName.replace("\"", "");
+            }
+            module.name = moduleName;
+        }
+
         function addAttribs(f) {
             var attribs = [];
 
@@ -213,6 +222,11 @@ helper.createLink = function(doclet) {
 	                doclet.see[i] = hashToLink(doclet, seeItem);
 	            });
 	        }
+
+            if (doclet.kind === 'module') {
+                removeQuotesFromReelModule(doclet);
+            }
+
 	    });
 
 	    data.orderBy(['longname', 'version', 'since']);
