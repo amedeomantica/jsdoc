@@ -9,7 +9,6 @@ body {
 	font: 14px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans serif;
 	line-height: 130%;
 	color: #000;
-	padding: 20px;
 	background-color: hsla(0,0%,98%,1);
 }
 
@@ -25,15 +24,46 @@ a:active {
     color: #444;
 }
 
-#branding {
-    padding: 10px;
-    margin-bottom: 30px;
-	border-bottom: 4px double hsla(0,0%,90%,1);
-}
-
 header {
 	display: block;
 }
+
+
+#bar {
+    padding: 20px 20px 20px 100px;
+    border: 1px solid #333;
+    background-color: hsla(0,0%,20%,1);
+    background-image: url(montage-logo.png);
+    background-repeat: no-repeat;
+    background-size: 60px;
+    background-position: 20px center;
+    border-bottom: 1px solid #fff;
+}
+
+#bar > h2 {
+    display: inline-block;
+    color: hsl(0,0%,60%);
+    font-size: 30px;
+    line-height: 40px;
+}
+#bar .nav {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+#bar .nav a {
+    display: inline-block;
+    padding: 0px 10px;
+    font-size: 15px;
+    line-height: 50px;
+    text-decoration: none;
+    color: hsl(197, 75%, 60%);
+    text-shadow: #000 0 1px;
+}
+
+
+
+
 
 .class-description {
     font-style: italic;
@@ -43,8 +73,7 @@ header {
 }
 
 #main {
-    float: left;
-    width: 100%;
+    padding: 20px;
 }
 
 .page-title {
