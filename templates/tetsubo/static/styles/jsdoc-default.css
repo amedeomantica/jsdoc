@@ -30,21 +30,26 @@ header {
 
 
 #bar {
-    padding: 20px 20px 20px 100px;
+    padding: 10px 20px;
     border: 1px solid #333;
     background-color: hsla(0,0%,20%,1);
-    background-image: url(montage-logo.png);
-    background-repeat: no-repeat;
-    background-position: 20px center;
     border-bottom: 1px solid #fff;
 }
 
-#bar > h2 {
+#bar > a > h2 {
     display: inline-block;
     color: hsl(0,0%,60%);
     font-size: 30px;
-    line-height: 40px;
+    line-height: 60px;
+    padding-left: 80px;
+    background-image: url(montage-logo.png);
+    background-repeat: no-repeat;
+    background-position: left center;
 }
+#bar > a:hover > h2 {
+    color: hsl(0,0%,80%);
+}
+
 #bar .nav {
     position: absolute;
     top: 20px;
@@ -58,6 +63,9 @@ header {
     text-decoration: none;
     color: hsl(197, 75%, 60%);
     text-shadow: #000 0 1px;
+}
+#bar .nav a:hover {
+    color: hsl(197, 75%, 80%);
 }
 
 
