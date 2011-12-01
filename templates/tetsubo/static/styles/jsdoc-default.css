@@ -35,7 +35,6 @@ header {
     background-color: hsla(0,0%,20%,1);
     background-image: url(montage-logo.png);
     background-repeat: no-repeat;
-    background-size: 60px;
     background-position: 20px center;
     border-bottom: 1px solid #fff;
 }
