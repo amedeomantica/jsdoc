@@ -3,20 +3,33 @@
 <head>
 	<meta charset="utf-8">
 	<title>JSDoc: <?js= title ?></title>
-	
+
 	<script src="http://shjs.sourceforge.net/sh_main.min.js"> </script>
     <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"> </script>
-    
+
     <link type="text/css" rel="stylesheet" href="styles/node-dark.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-445875-15']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
 </head>
 
 <body>
 
 <div id="bar">
-    
+
     <h2>Montage API</h2>
-    
+
     <div class="nav">
         <a href="http://tetsubo.org/docs/api-reference/api-feedback/">Send feedback!</a>
         <a href="http://tetsubo.org/docs/">Montage Docs</a>
@@ -27,10 +40,10 @@
 
 <div id="main">
 
-    
-<nav>
-    <?js= nav ?>
-</nav>
+
+    <nav>
+        <?js= nav ?>
+    </nav>
 
 
     <h1 class="page-title"><?js= title ?></h1>
@@ -78,9 +91,9 @@
             if (doc.description) {
                 print('<p class="description">' + doc.description + '</p>');
             }
-            
+
             print(render('details.tmpl', doc));
-            
+
             if (doc.examples && doc.examples.length) {
                 print('<h3>Example' + (doc.examples.length > 1? 's':'') + '</h3>');
                 print( render('examples.tmpl', doc.examples) );
@@ -173,12 +186,12 @@
 
             <?js } ?>
         </div>
-        
+
         <?js
-            if (doc.augments && doc.augments.length) { 
+            if (doc.augments && doc.augments.length) {
         ?>
             <h3 class="subsection-title">Extends</h3>
-            
+
             <ul><?js
                 doc.augments.forEach(function(a) {
             ?>
@@ -186,15 +199,15 @@
             <?js
                 });
             ?></ul>
-        <?js 
+        <?js
             }
         ?>
-        
+
         <?js
-            if (doc.mixes && doc.mixes.length) { 
+            if (doc.mixes && doc.mixes.length) {
         ?>
             <h3 class="subsection-title">Mixes In</h3>
-            
+
             <ul><?js
                 doc.mixes.forEach(function(a) {
             ?>
@@ -202,15 +215,15 @@
             <?js
                 });
             ?></ul>
-        <?js 
+        <?js
             }
         ?>
-        
+
         <?js
-            if (doc.requires && doc.requires.length) { 
+            if (doc.requires && doc.requires.length) {
         ?>
             <h3 class="subsection-title">Requires</h3>
-            
+
             <ul><?js
                 doc.requires.forEach(function(r) {
             ?>
@@ -218,10 +231,10 @@
             <?js
                 });
             ?></ul>
-        <?js 
-            }  
+        <?js
+            }
         ?>
-        
+
         <?js
             var classes = find({kind: 'class', memberof: doc.longname});
             if (doc.kind !== 'globalobj' && classes && classes.length) {
@@ -247,16 +260,16 @@
             <?js
                 });
             ?></dl>
-            
+
         <?js } ?>
-        
+
         <?js
-            var namespaces = find({kind: 'namespace', memberof: doc.longname}); 
-            if (doc.kind !== 'globalobj' && namespaces && namespaces.length) { 
+            var namespaces = find({kind: 'namespace', memberof: doc.longname});
+            if (doc.kind !== 'globalobj' && namespaces && namespaces.length) {
         ?>
-            
+
             <h3 class="subsection-title">Namespaces</h3>
-            
+
             <dl><?js
                 namespaces.forEach(function(n) {
             ?>
@@ -265,27 +278,27 @@
             <?js
                 });
             ?></dl>
-            
+
         <?js } ?>
-        
+
         <?js
             var members = find({kind: 'member', memberof: doc.longname});
             if (title === 'Globals') {
                 members = find({kind: 'member', memberof: {isUndefined: true}});
             }
-            if (members && members.length && members.forEach) { 
+            if (members && members.length && members.forEach) {
         ?>
-            
+
             <h3 class="subsection-title">Members</h3>
-            
+
             <dl><?js
                 members.forEach(function(p) {
                     print(render('members.tmpl', p));
                 });
             ?></dl>
-            
+
         <?js } ?>
-        
+
         <?js
             var methods = find({kind: 'function', memberof: doc.longname});
             if (title === 'Globals') {
@@ -309,9 +322,9 @@
                     return 1
                 });
         ?>
-            
+
             <h3 class="subsection-title">Methods</h3>
-            
+
             <dl><?js
                 methods.forEach(function(m) {
                     if (doc.kind === 'class') {
@@ -322,12 +335,12 @@
             ?></dl>
         <?js } ?>
         <?js
-            var events = find({kind: 'event', memberof: doc.longname}); 
-            if (events && events.length && events.forEach) { 
+            var events = find({kind: 'event', memberof: doc.longname});
+            if (events && events.length && events.forEach) {
         ?>
-            
+
             <h3 class="subsection-title">Events</h3>
-            
+
             <dl><?js
                 events.forEach(function(e) {
                     print(render('method.tmpl', e));
@@ -335,8 +348,8 @@
             ?></dl>
         <?js } ?>
     </article>
-    
-    </section>  
+
+    </section>
     <?js }); ?>
 </div>
 

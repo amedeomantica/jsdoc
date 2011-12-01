@@ -62,7 +62,9 @@ helper.createLink = function(doclet) {
      */
     publish = function(data, opts) {
         var out = '',
-            containerTemplate = template.render(fs.readFileSync(__dirname + '/templates/tetsubo/tmpl/container.tmpl'));
+            containerTemplate = template.render(fs.readFileSync(__dirname + '/templates/tetsubo/tmpl/container.tmpl')),
+            indexTemplate = template.render(fs.readFileSync(__dirname + '/templates/tetsubo/tmpl/index.tmpl'));
+
 
         function render(tmpl, partialData) {
             var renderFunction = arguments.callee.cache[tmpl];
@@ -400,7 +402,7 @@ helper.createLink = function(doclet) {
         }
 
         if (globals.length) generate('Global', [{kind: 'globalobj'}], 'global.html');
-
+        generateIndex('Index', 'index.html');
 
         function generate(title, docs, filename) {
             var data = {
@@ -421,6 +423,30 @@ helper.createLink = function(doclet) {
             html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
 
             fs.writeFileSync(path, html)
+        }
+
+        function generateIndex(title, filename) {
+            var classes = find({kind: 'class', longname: longname});
+            var data = {
+                title: title,
+                docs: classes,
+                nav: nav,
+
+                // helpers
+                render: render,
+                find: find,
+                linkto: linkto,
+                htmlsafe: htmlsafe
+            };
+
+            var filename = "index.html";
+            var path = outdir + '/' + filename,
+                html = indexTemplate.call(data, data);
+
+            html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
+
+            fs.writeFileSync(path, html)
+
         }
     }
 
