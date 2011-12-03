@@ -91,6 +91,7 @@ header {
     margin: 10px 0 30px 0;
     border: 1px solid hsla(0,0%,90%,1);
     border-spacing: 0;
+    width: 100%;
 }
 .zebra-striped td {
     padding: 5px;
@@ -100,10 +101,12 @@ header {
     background-color: hsla(0,0%,94%,1);
 }
 
-
+.zebra-striped td:nth-child(even) {
+    border-left: 1px solid hsla(0,0%,90%,1);
+}
 
 section {
-	display: block;	
+	display: block;
 	padding: 10px 20px;
     margin-right: 270px;
 }
