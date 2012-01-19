@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Montage API: <?js= title ?></title>
+	<title>Screening API: <?js= title ?></title>
 
 	<script src="http://shjs.sourceforge.net/sh_main.min.js"> </script>
     <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"> </script>
 
     <link type="text/css" rel="stylesheet" href="styles/node-dark.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-   <script type="text/javascript">
+    <script type="text/javascript">
 
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-445875-15']);
@@ -23,7 +23,6 @@
       })();
 
     </script>
-    <link rel="icon" type="image/png" href="styles/montage-logo-favicon.png">
 
 </head>
 
@@ -31,11 +30,11 @@
 
 <div id="bar">
 
-    <a href="http://tetsubo.org/mot/montage-api/index.html"><h2>Montage API</h2></a>
+    <a href="http://tetsubo.org/mot/screening-api/index.html"><h2>Screening API</h2></a>
 
     <div class="nav">
         <a href="http://tetsubo.org/docs/api-reference/api-feedback/">Send feedback!</a>
-        <a href="http://tetsubo.org/docs/">Montage Docs</a>
+        <a href="http://tetsubo.org/docs/">Screening Docs</a>
         <a href="http://tetsubo.org/">tetsubo.org</a>
     </div>
 
@@ -81,7 +80,6 @@
     </header>
 
     <article>
-
         <div class="container-overview">
         <?js
         if (doc.kind === 'module' && doc.module) {
@@ -104,69 +102,6 @@
             }
         }
         ?>
-<!-- Extends -->
-        <?js
-            if (doc.augments && doc.augments.length) {
-        ?>
-            <h3 class="subsection-title">Extends: <small><?js= linkto(doc.augments[0], doc.augments[0].substring(doc.augments[0].lastIndexOf(".")+1)) ?></small></h3>
-
-            <ul><?js
-                doc.augments.forEach(function(a) {
-            ?>
-                <li><?js= linkto(a, a.substring(a.lastIndexOf(".")+1)) ?></li>
-            <?js
-                });
-            ?></ul>
-        <?js
-            }
-        ?>
-<!-- Requires -->
-        <?js
-            if (doc.requires && doc.requires.length) {
-        ?>
-            <h3 class="subsection-title">Requires</h3>
-
-            <ul><?js
-                doc.requires.forEach(function(r) {
-            ?>
-                <li><?js= linkto(r, r) ?></li>
-            <?js
-                });
-            ?></ul>
-        <?js
-            }
-        ?>
-
-<!-- Prototypes -->
-        <?js
-            var classes = find({kind: 'class', memberof: doc.longname});
-            if (doc.kind !== 'globalobj' && classes && classes.length) {
-                classes.sort(function(m1, m2){
-                    var nameA = m1.name.toLowerCase(), nameB = m2.name.toLowerCase();
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA == nameB) {
-                        return 0;
-                    }
-                    return 1
-                });
-        ?>
-
-            <h3 class="subsection-title">Prototypes</h3>
-
-            <dl><?js
-                classes.forEach(function(c) {
-            ?>
-                <dt><?js= linkto(c.longname, c.name) ?></dt>
-                <dd><?js if (c.summary) print(c.summary); ?></dd>
-            <?js
-                });
-            ?></dl>
-
-        <?js } ?>
-
-
         <!-- Summary tables -->
         <?js
             var members = find({kind: 'member', memberof: doc.longname});
@@ -176,7 +111,7 @@
             if (members && members.length && members.forEach) {
         ?>
 
-            <h3 class="subsection-title">Property summary</h3>
+            <h3 class="subsection-title">Properties summary</h3>
 
 
             <table class="zebra-striped">
@@ -254,6 +189,21 @@
             <?js } ?>
         </div>
 
+        <?js
+            if (doc.augments && doc.augments.length) {
+        ?>
+            <h3 class="subsection-title">Extends</h3>
+
+            <ul><?js
+                doc.augments.forEach(function(a) {
+            ?>
+                <li><?js= linkto(a, a) ?></li>
+            <?js
+                });
+            ?></ul>
+        <?js
+            }
+        ?>
 
         <?js
             if (doc.mixes && doc.mixes.length) {
@@ -271,7 +221,49 @@
             }
         ?>
 
+        <?js
+            if (doc.requires && doc.requires.length) {
+        ?>
+            <h3 class="subsection-title">Requires</h3>
 
+            <ul><?js
+                doc.requires.forEach(function(r) {
+            ?>
+                <li><?js= linkto(r, r) ?></li>
+            <?js
+                });
+            ?></ul>
+        <?js
+            }
+        ?>
+
+        <?js
+            var classes = find({kind: 'class', memberof: doc.longname});
+            if (doc.kind !== 'globalobj' && classes && classes.length) {
+                classes.sort(function(m1, m2){
+                    var nameA = m1.name.toLowerCase(), nameB = m2.name.toLowerCase();
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA == nameB) {
+                        return 0;
+                    }
+                    return 1
+                });
+        ?>
+
+            <h3 class="subsection-title">Prototypes</h3>
+
+            <dl><?js
+                classes.forEach(function(c) {
+            ?>
+                <dt><?js= linkto(c.longname, c.name) ?></dt>
+                <dd><?js if (c.summary) print(c.summary); ?></dd>
+            <?js
+                });
+            ?></dl>
+
+        <?js } ?>
 
         <?js
             var namespaces = find({kind: 'namespace', memberof: doc.longname});
