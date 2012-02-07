@@ -9,16 +9,23 @@ Installation
 
 1. Change directory to your /montage source tree folder.
 2. Clone JSDoc from GitHub:
+<pre>git clone git@github.com:Motorola-Mobility/jsdoc.git</pre>
 
-```git clone git@github.com:Motorola-Mobility/jsdoc.git```
+3. Run JSDoc on the source tree. Use one of the following command strings based on whether you're generating Montage or Screening docs:
 
-3. Run the following command:
+**Montage docs**:
 
 ```jsdoc/jsdoc -t tetsubo -r core/ ui/ data/```
 
-Any errors will be reported in the terminal. No console output means the build succeeded.
+**Screening docs**:
 
-If you want to verify the actual output of your JSDoc comments, open the ```montage/out``` folder, where the generated files are put by default, and open index.html in a browser.
+<pre>jsdoc/jsdoc -t screening server/lib/agents-webdriver/agent.js 
+                            server/lib/agents-webdriver/component.js 
+                            server/lib/agents-webdriver/element.js 
+                            server/lib/testcase/script.js
+</pre>
+
+Any errors will be reported in the terminal. No console output means the build succeeded. If you want to verify the actual output of your JSDoc comments, open the ```montage/out``` folder, where the generated files are put by default, and open index.html in a browser.
 
 
 Dependencies
@@ -56,7 +63,6 @@ java -classpath ${BASEDIR}/lib/js.jar org.mozilla.javascript.tools.debugger.Main
 ```
 
 3. Run ```jsdoc``` from the terminal again.
-
 This will open a debugging window. Choose "Break on Exceptions" from the "Debug" menu, then press the "Run" button. If there is an error, you should see exactly
 where it is in the source code.
 
