@@ -1,47 +1,25 @@
-JSDoc 3
+JSDoc 3 for Montage and Screening
 =======
 
-An inline API documentation processor for JavaScript. JSDoc 3 is intended to be
-an upgrade to JsDoc Toolkit (JSDoc 2).
-
-Notice
-------
-
-This is *beta software*! It is available for testing purposes and may not be 
-suitable for production use yet.
+This is a fork of JSDoc 3, an API documentation generator, to support Montage and Screening products. 
 
 Installation
 ------------
 
-Download a copy of JSDoc 3 from the official Git Hub repository here:
-<https://github.com/micmath/jsdoc>
 
-To test that jsdoc is working, change your working directory to the jsdoc folder
-and run the following command:
+1. Change directory to your /montage source tree folder.
+2. Clone JSDoc from GitHub:
 
-	java -cp lib/js.jar org.mozilla.javascript.tools.shell.Main \
-	-modules node_modules -modules rhino_modules \
-	jsdoc.js -T
-	
-If you are operating on a Mac OSX or *nix platform, you can shorten that command
-to this:
+    git clone git@github.com:Motorola-Mobility/jsdoc.git
 
-    ./jsdoc -T
+3. Run the following command:
 
-Usage
------
+    jsdoc/jsdoc -t tetsubo -r core/ ui/ data/
 
-This example assumes that your working directory is the jsdoc application base
-directory:
+Any errors will be reported in the terminal. No console output means the build succeeded.
 
-    ./jsdoc yourSourceCodeFile.js
+If you want to verify the actual output of your JSDoc comments, open the ```montage/out``` folder, where the generated files are put by default, and open index.html in a browser.
 
-For help regarding the supported commandline options use the --help option.
-
-	./jsdoc --help
-
-Generated documentation will appear in the folder specified by the --destination
-option, or in a folder named "out" by default.
 
 Dependencies
 ------------
@@ -62,17 +40,24 @@ Debugging
 
 Rhino is not always very friendly when it comes to reporting errors in
 JavaScript. Luckily it comes with a full-on debugger included that can be much
-more useful than a simple stack trace. To invoke JSDoc with the debugger try the
-following command:
+more useful than a simple stack trace. To invoke JSDoc with the debugger do the following:
 
-    $ java -classpath lib/js.jar \
-    org.mozilla.javascript.tools.debugger.Main -debug \
-    -modules node_modules -modules rhino_modules \
-    jsdoc.js \
-    your/script.js
+1. Open the `jsdoc/jsdoc` script in a text editor.
+2. Comment the first `java` command string (which launches the standard JSDoc utility), and uncomment the second one:
 
-This will open a debugging window. Choose "Break on Exceptions" from the "Debug"
-menu, then press the "Run" button. If there is an error, you should see exactly
+```
+#!/bin/sh
+
+# rhino discards the path to the current script file, so we must add it back
+BASEDIR=`dirname $0`
+#java -classpath ${BASEDIR}/lib/js.jar org.mozilla.javascript.tools.shell.Main -modules ${BASEDIR}/node_modules -modules ${BASEDIR}/rhino_modules -modules ${BASEDIR} ${BASEDIR}/jsdoc.js --dirname=${BASEDIR} $@
+
+java -classpath ${BASEDIR}/lib/js.jar org.mozilla.javascript.tools.debugger.Main -debug -modules ${BASEDIR}/node_modules -modules ${BASEDIR}/rhino_modules  -modules ${BASEDIR} ${BASEDIR}/jsdoc.js --dirname=${BASEDIR} $@
+```
+
+3. Run ```jsdoc``` from the terminal again.
+
+This will open a debugging window. Choose "Break on Exceptions" from the "Debug" menu, then press the "Run" button. If there is an error, you should see exactly
 where it is in the source code.
 
 See Also
