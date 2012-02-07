@@ -10,11 +10,11 @@ Installation
 1. Change directory to your /montage source tree folder.
 2. Clone JSDoc from GitHub:
 
-    git clone git@github.com:Motorola-Mobility/jsdoc.git
+```git clone git@github.com:Motorola-Mobility/jsdoc.git```
 
 3. Run the following command:
 
-    jsdoc/jsdoc -t tetsubo -r core/ ui/ data/
+```jsdoc/jsdoc -t tetsubo -r core/ ui/ data/```
 
 Any errors will be reported in the terminal. No console output means the build succeeded.
 
