@@ -11,7 +11,8 @@ Installation
 2. Clone JSDoc from GitHub:
 <pre>git clone git@github.com:Motorola-Mobility/jsdoc.git</pre>
 
-3. Run JSDoc on the source tree. Use one of the following command strings based on whether you're generating Montage or Screening docs:
+3. Change directory to the ```/montage``` or ```/screening``` working directory.
+3. Run JSDoc on the source tree:
 
 **Montage docs**:
 
