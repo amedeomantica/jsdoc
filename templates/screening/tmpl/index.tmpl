@@ -47,14 +47,91 @@
 
 
     <h1 class="page-title">Index</h1>
+    <article>
+    <section>
 
-    <?js
-        docs.forEach(function(doc, i) {
-            console.log(doc.className);
-    }); ?>
+<p>
+        The Screening API demonstrates the code syntax and use of the following Screening JavaScript objects and corresponding interfaces. For your guide, examples are provided:</p>
+    <table class="zebra-striped" style="table-layout: ">
+        <thead>
+            <tr>
+                <th>
+                    Object
+                </th>
+                <th>
+                    Interface
+                </th>
+                <th>
+                    Example
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <code>Script</code>
+                </td>
+                <td>
+                    <code>script.</code>
+                </td>
+                <td>
+                    //script is global, accessed anywhere<br>
+                    <code>script.wait(1000);</code>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <code>WebDriverAgent</code>
+                </td>
+                <td>
+                    <code>agent.</code>
+                </td>
+                <td>
+                    <code>var agent = new Agent();</code>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <code>WebDriverComponent</code>
+                </td>
+                <td>
+                    <code>component.</code>
+                </td>
+                <td>
+                    <code>var cmp = agent.component('#nodeId');</code>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <code>WebDriverElement</code>
+                </td>
+                <td>
+                    <code>element.</code>
+                </td>
+                <td>
+                    <code>var el = agent.element('#nodeId');</code>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <code>WebDriverElementArray</code>
+                </td>
+                <td>
+                    <code>elements.</code>
+                </td>
+                <td>
+                    <code>var els = agent.elements('.className');</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+        <b>Important note:</b> All interactions with the Application Under Test (AUT) happen through the Agent interface or one of the objects queried by it. The type of
+        <code>agent</code> object will be determined by the agent device to which it is being connected. For example, connections to a WebDriver server will be managed
+        with a <code>WebDriverAgent</code> object. In your scripts the correct type of agent will be returned automatically when creating an instance of the generic <code>Agent</code> object.
 
-
-
+</div>
+    </section>
+    </article>
 
 <br clear="both">
 
