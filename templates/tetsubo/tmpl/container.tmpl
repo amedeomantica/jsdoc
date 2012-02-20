@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Montage API: <?js= title ?></title>
+    <meta charset="utf-8">
+    <title>Montage API: <?js= title ?></title>
 
-	<script src="http://shjs.sourceforge.net/sh_main.min.js"> </script>
-    <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"> </script>
+    <script src="styles/sh_main.js"> </script>
+    <script src="styles/sh_javascript.js"> </script>
 
     <link type="text/css" rel="stylesheet" href="styles/node-dark.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+     <script type="text/javascript" src="styles/list.js"></script>
    <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -42,12 +43,20 @@
 </div>
 
 <div id="main">
-
-
-    <nav>
+    <nav id="proto-list">
+        Filter: <input id="search" class="search" />
+        <!-- <span class="sort" data-sort="name">Sort by name</span> -->
         <?js= nav ?>
     </nav>
 
+    <script>
+    // The name of the class applied to each <a/> element in the list
+    var options = {
+        valueNames: ['prototype']
+    };
+
+    var hackerList = new List('proto-list', options);
+    </script>
 
     <h1 class="page-title"><?js= title ?></h1>
 
@@ -370,5 +379,7 @@
 </footer>
 
 <script> sh_highlightDocument(); </script>
+</script>
+
 </body>
 </html>

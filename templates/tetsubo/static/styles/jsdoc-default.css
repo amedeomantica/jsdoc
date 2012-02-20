@@ -108,7 +108,7 @@ header {
 section {
 	display: block;
 	padding: 10px 20px;
-    margin-right: 270px;
+    margin-right: 300px;
 }
 
 section a {
@@ -122,8 +122,16 @@ section a:active {
     color: hsl(200,100%,0%);
 }
 
+section p {
+    margin-right: 10px;
+}
+
 .variation {
     display: none;
+}
+
+article {
+    margin-left: 300px;
 }
 
 article > dl > dd {
@@ -145,8 +153,8 @@ article .name {
 
 nav {
 	display: block;
-	float: right;
-    width: 250px;
+	float: left;
+    width: 300px;
 }
 
 nav ul {
@@ -346,3 +354,20 @@ h6
 
 .params th, .props th { border-right: 1px solid #aaa; }
 .params thead .last, .props thead .last { border-right: 1px solid #ddd; }
+
+dl {
+    margin-bottom:24px;
+}
+dl dt {
+    font-weight:bold;
+    margin-bottom:8px;
+}
+dl dd {
+    margin-left:12px;
+    margin-bottom:12px;
+}
+dl dd:last-child, dl:last-child {
+    margin-bottom:0;
+}
+
+

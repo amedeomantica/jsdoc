@@ -4,8 +4,12 @@
 	<meta charset="utf-8">
 	<title>Montage API Reference-<?js= title ?></title>
 
-	<script src="http://shjs.sourceforge.net/sh_main.min.js"> </script>
-    <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"> </script>
+	<script src="styles/sh_main.js"> </script>
+    <script src="styles/sh_javascript.js"> </script>
+
+     <script type="text/javascript" src="styles/list.js"></script>
+
+
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -40,22 +44,48 @@
 
 </div>
 
+
+
 <div id="main">
 
-<nav>
-    <?js= nav ?>
-</nav>
+    <nav id="proto-list">
+        Filter: <input id="search" class="search" />
+        <!-- <span class="sort" data-sort="name">Sort by name</span> -->
+        <?js= nav ?>
+    </nav>
+
+    <script>
+    // The name of the class applied to each <a/> element in the list
+    var options = {
+        valueNames: ['prototype']
+    };
+
+    var hackerList = new List('proto-list', options);
+    </script>
 
 
-    <h1 class="page-title">Montage API Index</h1>
-
-    <?js
-        docs.forEach(function(doc, i) {
-            console.log(doc.className);
-    }); ?>
+<section>
+<article>
+<h1>Montage API Reference</h1>
 
 
+  <h2>Component APIs</h2>
+  <ul id="" class="">
+    <li><a href="" title=""></a>aasdfasdf</li>
+    <li><a href="" title=""></a>sdfsdf</li>
+    <li><a href="" title=""></a>sdfsdfsdf</li>
+    <li><a href="" title=""></a>asdfasdf</li>
+    <li><a href="" title=""></a></li>
+    <li><a href="" title=""></a></li>
+    <li><a href="" title=""></a></li>
+  </ul><!-- / -->
+  <h2>Core APIs</h2>
+  <h2>Data persistence</h2>
 
+</article>
+
+
+</section>
 
 <br clear="both">
 

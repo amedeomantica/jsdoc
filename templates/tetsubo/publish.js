@@ -258,7 +258,7 @@ helper.createLink = function(doclet) {
 
         function linkto(longname, linktext) {
             var url = helper.longnameToUrl[longname];
-            return url? '<a href="'+url+'">'+(linktext || longname)+'</a>' : (linktext || longname);
+            return url? '<a class="prototype" href="'+url+'">'+(linktext || longname)+'</a>' : (linktext || longname);
         }
 
         data.forEach(function(doclet) {
@@ -306,7 +306,7 @@ helper.createLink = function(doclet) {
         var classNames = find({kind: 'class'});
         if (classNames.length) {
             classNames.sort(alphabetical);
-            nav = nav + '<h3>Prototypes</h3><ul>';
+            nav = nav + '<h3>Prototypes</h3><ul class=\"list\">';
             classNames.forEach(function(c) {
                 var moduleSameName = find({kind: 'module', longname: c.longname});
                 if (moduleSameName.length) {
@@ -324,7 +324,7 @@ helper.createLink = function(doclet) {
         var externalNames = find({kind: 'external'});
         if (externalNames.length) {
             externalNames.sort(alphabetical);
-            nav = nav + '<h3>Externals</h3><ul>';
+            nav = nav + '<h3>Externals</h3><ul class=\"list\">';
             externalNames.forEach(function(e) {
                 if ( !seen.hasOwnProperty(e.longname) ) nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
                 seen[e.longname] = true;
@@ -372,7 +372,7 @@ helper.createLink = function(doclet) {
 
         if (globalNames.length) {
             globalNames.sort(alphabetical);
-            nav = nav + '<h3>Global</h3><ul>';
+            nav = nav + '<h3>Global</h3><ul class=\"list\">';
             globalNames.forEach(function(g) {
                 if ( g.kind !== 'typedef' && !seen.hasOwnProperty(g.longname) ) nav += '<li>'+linkto(g.longname, g.name)+'</li>';
                 seen[g.longname] = true;
