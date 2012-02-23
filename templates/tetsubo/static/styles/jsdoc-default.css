@@ -85,6 +85,7 @@ header {
 
 .page-title {
     margin: 10px 0;
+    white-space: nowrap;
 }
 
 .zebra-striped {
@@ -132,7 +133,9 @@ section p {
 
 article {
     margin-left: 300px;
-}
+    width: 100%;
+/*    margin: 10px 10px 10px 1;
+*/}
 
 article > dl > dd {
     border-bottom: 1px dashed hsl(0,0%,85%);
@@ -155,6 +158,7 @@ nav {
 	display: block;
 	float: left;
     width: 300px;
+    height: 100%;
 }
 
 nav ul {
@@ -220,6 +224,7 @@ h2
 	font-weight: bold;
 	letter-spacing: -0.01em;
 	margin: 6px 0 3px 0;
+    white-space: nowrap;
 }
 
 h3
