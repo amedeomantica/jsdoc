@@ -7,26 +7,31 @@ Installation
 ------------
 
 
-1. Change directory to your /montage source tree folder.
-2. Clone JSDoc from GitHub:
-<pre>git clone git@github.com:Motorola-Mobility/jsdoc.git</pre>
+Clone JSDoc from GitHub. 
 
-3. Change directory to the ```/montage``` or ```/screening``` working directory.
-3. Run JSDoc on the source tree:
+```git clone git@github.com:Motorola-Mobility/jsdoc.git```
 
-**Montage docs**:
+Preferably, the clone lives in same parent folder that contains the `montage/` and `screening/` source folders. 
+You will need to adjust your paths below accordingly if your folder structure differs.
 
-```jsdoc/jsdoc -t tetsubo -r core/ ui/ data/```
+In a terminal window, navigate to the ```/jsdoc``` folder you just cloned.
 
-**Screening docs**:
+**To generate Montage docs**:
 
-<pre>jsdoc/jsdoc -t screening server/lib/agents-webdriver/agent.js 
-                            server/lib/agents-webdriver/component.js 
-                            server/lib/agents-webdriver/element.js 
-                            server/lib/testcase/script.js
-</pre>
+```./jsdoc -t templates/tetsubo/ -r ../montage/core/ ..montage/ui/ ../montage/data/```
+ 
+**To generate Screening docs**: 
 
-Any errors will be reported in the terminal. No console output means the build succeeded. If you want to verify the actual output of your JSDoc comments, open the ```montage/out``` folder, where the generated files are put by default, and open index.html in a browser.
+<pre>./jsdoc -t templates/screening ../screening/server/lib/agents-webdriver/agent.js 
+                            ../screening/server/lib/agents-webdriver/component.js 
+                            ../screening/server/lib/agents-webdriver/element.js 
+                            ../screening/server/lib/testcase/script.js
+</pre>                            `
+
+By default, HTML output is copied to the ```jsdoc/out``` folder. You can specify another output directory with the ```-d destfolder/``` option.
+
+* Any errors that occur during generation will be reported in the terminal. 
+* No console output means the build succeeded. 
 
 
 Dependencies
