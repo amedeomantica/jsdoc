@@ -11,6 +11,15 @@
 */
 exports.defineTags = function(dictionary) {
     
+    dictionary.defineTag('abstract', {
+        mustNotHaveValue: true,
+        onTagged: function(doclet, tag) {
+            // since "abstract" is reserved word in JavaScript let's use "virtual" in code
+            doclet.virtual = true;
+        }
+    })
+    .synonym('virtual');
+    
     dictionary.defineTag('access', {
         mustHaveValue: true,
         onTagged: function(doclet, tag) {
@@ -474,6 +483,14 @@ exports.defineTags = function(dictionary) {
         onTagged: function(doclet, tag) {
             if (!doclet.todo) { doclet.todo = []; }
             doclet.todo.push(tag.value);
+        }
+    });
+    
+    dictionary.defineTag('tutorial', {
+        mustHaveValue: true,
+        onTagged: function(doclet, tag) {
+            if (!doclet.tutorials) { doclet.tutorials = []; }
+            doclet.tutorials.push(tag.value);
         }
     });
     

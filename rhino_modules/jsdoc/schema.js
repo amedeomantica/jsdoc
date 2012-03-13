@@ -55,6 +55,13 @@ exports.jsdocSchema = {
                             "type": "string"
                         }
                     },
+                    "tutorials": { // extended tutorials
+                        "type": ["string", "array"],
+                        "optional": true,
+                        "items": {
+                            "type": "string"
+                        }
+                    },
 					"deprecated": { // is usage of this symbol deprecated?
 						"type": ["string", "boolean"],
 						"optional": true
@@ -112,6 +119,11 @@ exports.jsdocSchema = {
                         "optional": true,
                         "maxItems": 1,
                         "enum": ["private", "protected", "public"]
+                    },
+                    "virtual": { // is a member left to be implemented during inheritance?
+                        "type": "boolean",
+                        "optional": true,
+                        "default": false
                     },
                     "attrib": { // other attributes, like "readonly"
                         "type": "string",

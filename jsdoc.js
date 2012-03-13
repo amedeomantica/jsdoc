@@ -142,7 +142,8 @@ function main() {
             opts: {
                 parser: require('jsdoc/opts/parser'),
             }
-        };
+        },
+        resolver;
     
     env.opts = jsdoc.opts.parser.parse(env.args);
     
@@ -155,8 +156,18 @@ function main() {
         throw('Configuration file cannot be evaluated. '+e);
     }
     
+    // allow to pass arguments from configuration file
+    if (env.conf.opts) {
+        for (var opt in env.conf.opts) {
+            // arguments passed in command are more important
+            if (!(opt in env.opts)) {
+                env.opts[opt] = env.conf.opts[opt];
+            }
+        }
+    }
+    
     if (env.opts.query) {
-        env.opts.query = require('query').toObject(env.opts.query);
+        env.opts.query = require('common/query').toObject(env.opts.query);
     }
     
     // which version of javascript will be supported? (rhino only)
@@ -230,15 +241,25 @@ function main() {
             exit(0);
         }
 
-        env.opts.template = env.opts.template || 'default';
+        // load this module anyway to ensure root instance exists
+        // it's not a problem since without tutorials root node will have empty children list
+        resolver = require('jsdoc/tutorial/resolver');
+
+        if (env.opts.tutorials) {
+            resolver.load(env.opts.tutorials);
+            resolver.resolve();
+        }
+
+        env.opts.template = env.opts.template || 'templates/default';
         
         // should define a global "publish" function
-        include('templates/' + env.opts.template + '/publish.js');
+        include(env.opts.template + '/publish.js');
 
         if (typeof publish === 'function') {
             publish(
                 new (require('typicaljoe/taffy'))(docs),
-                env.opts
+                env.opts,
+                resolver.root
             );
         }
         else { // TODO throw no publish warning?

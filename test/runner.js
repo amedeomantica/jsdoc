@@ -103,6 +103,7 @@ testFile('test/t/cases/innerscope2.js');
 testFile('test/t/cases/modules/data/mod-1.js');
 testFile('test/t/cases/modules/data/mod-2.js');
 
+testFile('test/t/cases/abstracttag.js');
 testFile('test/t/cases/accesstag.js');
 testFile('test/t/cases/alias.js');
 testFile('test/t/cases/alias2.js');
@@ -143,6 +144,7 @@ testFile('test/t/cases/memberoftag3.js');
 testFile('test/t/cases/memberoftagforced.js');
 testFile('test/t/cases/moduletag.js');
 testFile('test/t/cases/moduletag2.js');
+testFile('test/t/cases/namedFuncStatement.js');
 testFile('test/t/cases/paramtag.js');
 testFile('test/t/cases/privatetag.js');
 testFile('test/t/cases/quotename.js');
