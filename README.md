@@ -16,9 +16,17 @@ You will need to adjust your paths below accordingly if your folder structure di
 
 In a terminal window, navigate to the ```/jsdoc``` folder you just cloned.
 
-**To generate Montage docs**:
+**To generate the entire Montage API doc set**:
 
 ```./jsdoc -t templates/tetsubo/ -r ../montage/core/ ..montage/ui/ ../montage/data/```
+
+**To generate docs for a single file**:
+
+```./jsdoc -t templates/tetsubo/ ../montage/core/core.js```
+
+**To generate docs for files in a single folder**:
+
+```./jsdoc -t templates/tetsubo/ -r ../montage/ui/rich-text-component```
  
 **To generate Screening docs**: 
 
