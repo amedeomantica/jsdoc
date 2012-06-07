@@ -21,11 +21,145 @@
     ?>
 
     <?js
+    if (this.params && params.length || this.returns && returns.length) {
+
+    var useAttributes = false;
+    var useDefault = false;
+    var useName = this.returns && returns.length;
+    var useDescription = false;
+
     if (this.params && params.length) {
-        print('<h5>Parameters:</h5>');
-        print( render('params.tmpl', params) );
+        params.forEach(function (param) {
+            if (!param) return;
+            if (param.optional || param.nullable)
+                useAttributes = true;
+            if (param.name)
+                useName = true;
+            if (typeof param.defaultvalue !== 'undefined')
+                useDefault = true;
+            if (param.description)
+                useDescription = true;
+        });
     }
+
+    if (this.returns && returns.length) {
+        returns.forEach(function (returns) {
+            if (!returns) return;
+            if (returns.description)
+                useDescription = true;
+        });
+    }
+
     ?>
+
+    <table class="params">
+        <thead>
+
+        <tr>
+            <?js if (useName) {?>
+                <th>Name</th>
+            <?js } ?>
+
+            <th>Type</th>
+
+            <?js if (useAttributes) {?>
+                <th>Attributes</th>
+            <?js } ?>
+
+            <?js if (useDefault) {?>
+                <th>Default</th>
+            <?js } ?>
+
+            <?js if (useDescription) {?>
+                <th class="last">Description</th>
+            <?js } ?>
+        </tr>
+        </thead>
+
+        <?js
+        if (this.params && params.length ) {
+            params.forEach(function(param) {
+                if (!param) { return; }
+        ?>
+        <tbody>
+
+            <tr>
+
+                <?js if (useName) { ?>
+                    <td class="name"><code><?js= param.name ?></code></td>
+                <?js } ?>
+
+                <td class="type">
+                <?js
+                    if (param.type && param.type.names) {
+                        param.type.names.forEach(function(name, i) {
+                            print( linkto(name, htmlsafe(name)) );
+                            if (i < param.type.names.length-1) { print(' | '); }
+                        });
+                    }
+                ?>
+                </td>
+
+                <?js if (useAttributes) { ?>
+                    <td class="attributes">
+                    <?js
+                        if (param.optional) {
+                            print( '&lt;optional&gt;<br>' );
+                        }
+
+                        if (param.nullable) {
+                            print( '&lt;nullable&gt;<br>' );
+                        }
+                    ?>
+                    </td>
+                <?js } ?>
+
+                <?js if (useDefault) { ?>
+                    <td class="default">
+                        <?= htmlsafe(param.defaultvalue) ?>
+                    </td>
+                <?js } ?>
+
+                <?js if (useDescription) { ?>
+                    <td class="description last"><?js= param.description ?></td>
+                <?js } ?>
+            </tr>
+
+        <?js
+            });
+        }
+        ?>
+
+        <?js if (this.returns && returns.length) { ?>
+            <?js returns.forEach(function(returns) { ?>
+                <td><strong><em>returns</em></strong></td>
+                <td>
+                <?js
+                    if (returns.type) {
+                        returns.type.names.forEach(function (name, i, names) {
+                            print(htmlsafe(name));
+                            if (i < names.length-1) print('|');
+                        });
+                    }
+                ?>
+                </td>
+                <?js if (useAttributes) { ?>
+                    <td></td>
+                <?js } ?>
+                <?js if (useDefault) { ?>
+                    <td></td>
+                <?js } ?>
+
+                <?js if (useDescription) { ?>
+                    <td class="description last"><?js= returns.description ?></td>
+                <?js } ?>
+            <?js }); ?>
+        <?js } ?>
+
+        </tbody>
+    </table>
+
+    <?js } ?>
 
     <?js print(render('details.tmpl', this)); ?>
 
@@ -47,18 +181,6 @@
     ?></ul><?js } else {
         exceptions.forEach(function(r) {
             print( render('exceptions.tmpl', r) );
-        });
-    } } ?>
-
-    <?js if (this.returns && returns.length) { ?>
-    <h5>Returns:</h5>
-    <?js if (returns.length > 1) { ?><ul><?js
-        returns.forEach(function(r) {
-            print( '<li>' + render('returns.tmpl', r) + '</li>' );
-        });
-    ?></ul><?js } else {
-        returns.forEach(function(r) {
-            print( render('returns.tmpl', r) );
         });
     } } ?>
 
