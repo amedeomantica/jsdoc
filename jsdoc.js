@@ -34,7 +34,7 @@ load(__dirname + '/lib/rhino-shim.js');
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-	
+
 /** Data representing the environment in which this app is running.
     @namespace
 */
@@ -44,20 +44,20 @@ env = {
         start: new Date(),
         finish: null
     },
-    
+
     /**
         The command line arguments passed into jsdoc.
         @type Array
     */
     args: Array.prototype.slice.call(arguments, 0),
-    
-    
+
+
     /**
         The parsed JSON data from the configuration file.
         @type Object
     */
     conf: {},
-    
+
     /**
         The command line arguments, parsed into a key/value hash.
         @type Object
@@ -79,12 +79,12 @@ app = {
 }
 
 try { main(); }
-catch(e) { 
-     if (e.rhinoException != null) { 
+catch(e) {
+     if (e.rhinoException != null) {
          e.rhinoException.printStackTrace();
      }
      else throw e;
-} 
+}
 finally { env.run.finish = new Date(); }
 
 /** Print string/s out to the console.
@@ -119,7 +119,7 @@ function include(filepath) {
     }
 }
 
-/** 
+/**
     Cause the VM running jsdoc to exit running.
     @param {number} [n = 0] The exit status.
  */
@@ -144,9 +144,9 @@ function main() {
             }
         },
         resolver;
-    
+
     env.opts = jsdoc.opts.parser.parse(env.args);
-    
+
     try {
         env.conf = JSON.parse(
             require('fs').readFileSync( env.opts.configure || __dirname + '/conf.json' )
@@ -155,7 +155,7 @@ function main() {
     catch (e) {
         throw('Configuration file cannot be evaluated. '+e);
     }
-    
+
     // allow to pass arguments from configuration file
     if (env.conf.opts) {
         for (var opt in env.conf.opts) {
@@ -165,16 +165,16 @@ function main() {
             }
         }
     }
-    
+
     if (env.opts.query) {
         env.opts.query = require('common/query').toObject(env.opts.query);
     }
-    
+
     // which version of javascript will be supported? (rhino only)
     if (typeof version === 'function') {
         version(env.conf.jsVersion || 180);
     }
-    
+
     if (env.opts.help) {
         console.log( jsdoc.opts.parser.help() );
         exit(0);
@@ -183,7 +183,7 @@ function main() {
         include('test/runner.js');
         exit(0);
     }
-    
+
     // allow user-defined plugins to register listeners
     if (env.conf.plugins) {
         for (var i = 0, leni = env.conf.plugins.length; i < leni; i++) {
@@ -193,7 +193,7 @@ function main() {
             }
         }
     }
-    
+
     // any source file named package.json is treated special
     for (var i = 0, l = env.opts._.length; i < l; i++ ) {
         if (/\bpackage\.json$/i.test(env.opts._[i])) {
@@ -203,39 +203,39 @@ function main() {
     }
 
     if (env.opts._.length > 0) { // are there any files to scan and parse?
-        
+
         var includeMatch = (env.conf.source && env.conf.source.includePattern)? new RegExp(env.conf.source.includePattern) : null,
             excludeMatch = (env.conf.source && env.conf.source.excludePattern)? new RegExp(env.conf.source.excludePattern) : null;
-        
+
         sourceFiles = app.jsdoc.scanner.scan(env.opts._, (env.opts.recurse? 10 : undefined), includeMatch, excludeMatch);
 
         require('jsdoc/src/handlers').attachTo(app.jsdoc.parser);
-        
+
         docs = app.jsdoc.parser.parse(sourceFiles, env.opts.encoding);
-        
+
         if (packageJson) {
             var packageDocs = new (require('jsdoc/package').Package)(packageJson);
             packageDocs.files = sourceFiles || [];
             docs.push(packageDocs);
         }
-        
+
         function indexAll(docs) {
             var lookupTable = {};
-            
+
             docs.forEach(function(doc) {
-                if ( !lookupTable.hasOwnProperty(doc.longname) ) {
+                if ( !Object.prototype.hasOwnProperty.call(lookupTable, doc.longname) ) {
                     lookupTable[doc.longname] = [];
                 }
                 lookupTable[doc.longname].push(doc);
             });
             docs.index = lookupTable;
         }
-        
+
         indexAll(docs);
-        
+
         //require('jsdoc/augment').addInherited(docs);
         require('jsdoc/borrow').resolveBorrows(docs);
-        
+
         if (env.opts.explain) {
             console.log(docs);
             exit(0);
@@ -251,7 +251,7 @@ function main() {
         }
 
         env.opts.template = env.opts.template || 'templates/default';
-        
+
         // should define a global "publish" function
         include(env.opts.template + '/publish.js');
 

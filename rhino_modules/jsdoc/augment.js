@@ -1,6 +1,6 @@
 
 (function() {
-    
+
     exports.addInherited = function(docs) {
         var dependencies = mapDependencies(docs.index);
         var sorted = sort(dependencies);
@@ -11,7 +11,7 @@
         });
         additions.forEach(function(doc) {
             var name = doc.longname;
-            if (!(docs.index.hasOwnProperty(name))) {
+            if (!(Object.prototype.hasOwnProperty.call(docs.index, name))) {
                 docs.index[name] = [];
             }
             docs.index[name].push(doc);
@@ -62,7 +62,7 @@
         }
         return additions;
     }
-    
+
     function getMembers(longname, docs) {
         var candidate, members = [];
         for (var i=0, ii=docs.length; i<ii; ++i) {
@@ -77,10 +77,10 @@
     function doop(o) {
         if (o instanceof Object && o.constructor != Function) {
             var clone = o instanceof Array ? [] : {}, prop;
-            
+
             for (prop in o){
-                if ( o.hasOwnProperty(prop) ) { 
-                    clone[prop] = (o[prop] instanceof Object)? doop(o[prop]) : o[prop]; 
+                if ( Object.prototype.hasOwnProperty.call(o, prop) ) {
+                    clone[prop] = (o[prop] instanceof Object)? doop(o[prop]) : o[prop];
                 }
             }
             return clone;
@@ -119,5 +119,5 @@
         return sorter.sort();
     };
 
-    
+
 })();

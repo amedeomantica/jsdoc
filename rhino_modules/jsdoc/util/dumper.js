@@ -11,7 +11,7 @@
 exports.dump = function(object) {
     indentBy = 0;
     output = '';
-    
+
     walk(object);
     outdent(false);
     return output;
@@ -64,7 +64,7 @@ seen.has = function(object) {
 
 function walk(object) {
     var value;
-    
+
     if ( value = getValue(object) ) {
         output += value + ',\n';
     }
@@ -88,7 +88,7 @@ function walk(object) {
         else {
             seen.push(object);
         }
-        
+
         indent('[');
         for (var i = 0, leni = object.length; i < leni; i++) {
             output += pad(indentBy); // + i + ': ';
@@ -104,10 +104,10 @@ function walk(object) {
         else {
             seen.push(object);
         }
-    
+
         indent('{');
         for (var p in object) {
-            if ( object.hasOwnProperty(p) ) {
+            if ( Object.prototype.hasOwnProperty.call(object, p) ) {
                 output += pad(indentBy) + stringify(p) + ': ';
                 walk( object[p] );
             }

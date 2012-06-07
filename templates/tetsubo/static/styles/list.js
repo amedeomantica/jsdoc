@@ -53,7 +53,7 @@ var List = function(id, options, values) {
 
     this.list = null;
     this.templateEngines = {};
-    
+
     this.page = options.page || 200;
     this.i = options.i || 1;
 
@@ -307,7 +307,7 @@ var List = function(id, options, values) {
                 values = item.values();
 
                 for(var j in columns) {
-                    if(values.hasOwnProperty(j) && columns[j] !== null) {
+                    if(Object.prototype.hasOwnProperty.call(values, j) && columns[j] !== null) {
                         text = (values[j] != null) ? values[j].toString().toLowerCase() : "";
                         if ((searchString !== "") && (text.search(searchString) > -1)) {
                             found = true;
@@ -401,7 +401,7 @@ var List = function(id, options, values) {
     this.update = function() {
         var is = self.items,
             il = is.length;
-        
+
         self.visibleItems = [];
         self.matchingItems = [];
         templater.clear();
@@ -423,10 +423,10 @@ var List = function(id, options, values) {
     Item = function(initValues, element, notCreate) {
         var item = this,
             values = {};
-        
+
         this.found = false; // Show if list.searched == true and this.found == true
         this.filtered = false;// Show if list.filtered == true and this.filtered == true
-        
+
         var init = function(initValues, element, notCreate) {
             if (element === undefined) {
                 if (notCreate) {
@@ -471,7 +471,7 @@ var List = function(id, options, values) {
         };
         init(initValues, element, notCreate);
     };
-    
+
     /* Templater with different kinds of template engines.
     * All engines have these methods
     * - reload(item)
@@ -485,7 +485,7 @@ var List = function(id, options, values) {
         }
         return new self.constructor.prototype.templateEngines[settings.engine](list, settings);
     };
-    
+
     init.start(values, options);
 };
 
@@ -496,12 +496,12 @@ List.prototype.templateEngines.standard = function(list, settings) {
     var listSource = h.getByClass(settings.listClass, list.listContainer, true),
         itemSource = getItemSource(settings.item),
         templater = this;
-    
+
     function getItemSource(item) {
         if (item === undefined) {
             var nodes = listSource.childNodes,
                 items = [];
-            
+
             for (var i = 0, il = nodes.length; i < il; i++) {
                 // Only textnodes have a data attribute
                 if (nodes[i].data === undefined) {
@@ -517,7 +517,7 @@ List.prototype.templateEngines.standard = function(list, settings) {
             return document.getElementById(settings.item);
         }
     }
-    
+
     var ensure = {
         created: function(item) {
             if (item.elm === undefined) {
@@ -525,7 +525,7 @@ List.prototype.templateEngines.standard = function(list, settings) {
             }
         }
     };
-    
+
     /* Get values from element */
     this.get = function(item, valueNames) {
         ensure.created(item);
@@ -534,21 +534,21 @@ List.prototype.templateEngines.standard = function(list, settings) {
             values[valueNames[i]] = [];
             var founds = h.getByClass(valueNames[i], item.elm)
             if (!founds) continue;
-            
+
             for (var f in founds) {
                 if (founds[f].innerHTML) {
-                    values[valueNames[i]].push(founds[f].innerHTML); 
+                    values[valueNames[i]].push(founds[f].innerHTML);
                 }
             }
         }
         return values;
     };
-    
+
     /* Sets values at element */
     this.set = function(item, values) {
         ensure.created(item);
         for(var v in values) {
-            if (values.hasOwnProperty(v)) {
+            if (Object.prototype.hasOwnProperty.call(values, v)) {
                 // TODO speed up if possible
                 var elm = h.getByClass(v, item.elm, true);
                 if (elm) {
@@ -557,7 +557,7 @@ List.prototype.templateEngines.standard = function(list, settings) {
             }
         }
     };
-    
+
     this.create = function(item) {
         if (item.elm !== undefined) {
             return;
@@ -721,14 +721,14 @@ h = {
                 return (p1 == "lt")? "<" : ">";
             });
             a = a.replace(/<\/?[^>]+(>|$)/g, "");
-            
+
             b = b.toString().replace(/&(lt|gt);/g, function (strMatch, p1){
                 return (p1 == "lt")? "<" : ">";
             });
             b = b.replace(/<\/?[^>]+(>|$)/g, "");
             var aa = this.chunkify(a);
             var bb = this.chunkify(b);
-            
+
             for (var x = 0; aa[x] && bb[x]; x++) {
                 if (aa[x] !== bb[x]) {
                     var c = Number(aa[x]), d = Number(bb[x]);
