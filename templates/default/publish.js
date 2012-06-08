@@ -3,7 +3,8 @@
     var template = require('jsdoc/template'),
         fs = require('fs'),
         helper = require('jsdoc/util/templateHelper'),
-        scopeToPunc = { 'static': '.', 'inner': '~', 'instance': '#' };
+        scopeToPunc = { 'static': '.', 'inner': '~', 'instance': '#' },
+        hasOwnProperty = Object.prototype.hasOwnProperty;
     
     /**
         @global
@@ -12,8 +13,10 @@
         @param {Tutorial} tutorials
      */
     publish = function(data, opts, tutorials) {
+        var defaultTemplatePath = 'templates/default';
+        var templatePath = (opts.template) ? opts.template : defaultTemplate;
         var out = '',
-            view = new template.Template(__dirname + '/templates/default/tmpl');
+            view = new template.Template(__dirname + '/' + templatePath + '/tmpl');
         
         // set up templating
         view.layout = 'layout.tmpl';
@@ -174,7 +177,7 @@
         fs.mkPath(outdir);
 
         // copy static files to outdir
-        var fromDir = __dirname + '/templates/default/static',
+        var fromDir = __dirname + '/' + templatePath + '/static',
             staticFiles = fs.ls(fromDir, 3);
             
         staticFiles.forEach(function(fileName) {
@@ -233,14 +236,17 @@
 	        }
         });
         
-        var nav = '',
+        var nav = '<h2><a href="index.html">Index</a></h2>',
             seen = {};
         
         var moduleNames = find({kind: 'module'});
+        moduleNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (moduleNames.length) {
             nav += '<h3>Modules</h3><ul>';
             moduleNames.forEach(function(m) {
-                if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
+                if ( !hasOwnProperty.call(seen, m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
                 seen[m.longname] = true;
             });
             
@@ -248,10 +254,13 @@
         }
         
         var externalNames = find({kind: 'external'});
+        externalNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (externalNames.length) {
             nav += '<h3>Externals</h3><ul>';
             externalNames.forEach(function(e) {
-                if ( !seen.hasOwnProperty(e.longname) ) nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
+                if ( !hasOwnProperty.call(seen, e.longname) ) nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
                 seen[e.longname] = true;
             });
             
@@ -259,6 +268,9 @@
         }
     
         var classNames = find({kind: 'class'});
+        classNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (classNames.length) {
             nav += '<h3>Classes</h3><ul>';
             classNames.forEach(function(c) {
@@ -268,7 +280,7 @@
                     moduleSameName[0].module = c;
                 }
                 
-                if (!seen.hasOwnProperty(c.longname) ) nav += '<li>'+linkto(c.longname, c.name)+'</li>';
+                if ( !hasOwnProperty.call(seen, c.longname) ) nav += '<li>'+linkto(c.longname, c.name)+'</li>';
                 seen[c.longname] = true;
             });
             
@@ -276,10 +288,13 @@
         }
         
         var namespaceNames = find({kind: 'namespace'});
+        namespaceNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (namespaceNames.length) {
             nav += '<h3>Namespaces</h3><ul>';
             namespaceNames.forEach(function(n) {
-                if ( !seen.hasOwnProperty(n.longname) ) nav += '<li>'+linkto(n.longname, n.name)+'</li>';
+                if ( !hasOwnProperty.call(seen, n.longname) ) nav += '<li>'+linkto(n.longname, n.name)+'</li>';
                 seen[n.longname] = true;
             });
             
@@ -290,7 +305,7 @@
 //         if (constantNames.length) {
 //             nav += '<h3>Constants</h3><ul>';
 //             constantNames.forEach(function(c) {
-//                 if ( !seen.hasOwnProperty(c.longname) ) nav += '<li>'+linkto(c.longname, c.name)+'</li>';
+//                 if ( !hasOwnProperty.call(seen, c.longname) ) nav += '<li>'+linkto(c.longname, c.name)+'</li>';
 //                 seen[c.longname] = true;
 //             });
 //             
@@ -298,10 +313,13 @@
 //         }
         
         var mixinNames = find({kind: 'mixin'});
+        mixinNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (mixinNames.length) {
             nav += '<h3>Mixins</h3><ul>';
             mixinNames.forEach(function(m) {
-                if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
+                if ( !hasOwnProperty.call(seen, m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
                 seen[m.longname] = true;
             });
             
@@ -318,11 +336,14 @@
         }
         
         var globalNames = find({kind: ['member', 'function', 'constant', 'typedef'], 'memberof': {'isUndefined': true}});
-
+        globalNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (globalNames.length) {
             nav += '<h3>Global</h3><ul>';
+            
             globalNames.forEach(function(g) {
-                if ( g.kind !== 'typedef' && !seen.hasOwnProperty(g.longname) ) nav += '<li>'+linkto(g.longname, g.name)+'</li>';
+                if ( g.kind !== 'typedef' && !hasOwnProperty.call(seen, g.longname) ) nav += '<li>'+linkto(g.longname, g.name)+'</li>';
                 seen[g.longname] = true;
             });
             
@@ -358,7 +379,13 @@
         }
 
         if (globals.length) generate('Global', [{kind: 'globalobj'}], 'global.html');
-        generate('Index', [], 'index.html');
+        
+        // index page displays information from package.json and lists files
+        var files = find({kind: 'file'}),
+            packages = find({kind: 'package'});
+        generate('Index',
+			[{kind: 'mainpage', longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'}].concat(packages).concat(files)
+		, 'index.html');
         
         
         function generate(title, docs, filename) {
