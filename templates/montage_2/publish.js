@@ -260,7 +260,7 @@
 
         var classNames = find({kind: 'class'});
         if (classNames.length) {
-            nav += '<h3>Classes</h3><ul>';
+            nav += '<h3>Prototypes</h3><ul>';
             classNames.forEach(function(c) {
                 var moduleSameName = find({kind: 'module', longname: c.longname});
                 if (moduleSameName.length) {
@@ -339,7 +339,7 @@
 
         for (var longname in helper.longnameToUrl) {
             var classes = find({kind: 'class', longname: longname});
-            if (classes.length) generate('Class: '+classes[0].name, classes, helper.longnameToUrl[longname]);
+            if (classes.length) generate('Prototype: '+classes[0].name, classes, helper.longnameToUrl[longname]);
 
             var modules = find({kind: 'module', longname: longname});
             if (modules.length) generate('Module: '+modules[0].name, modules, helper.longnameToUrl[longname]);
