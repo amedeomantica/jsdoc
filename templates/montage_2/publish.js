@@ -306,7 +306,6 @@
         var classNames = find({kind: 'class'});
         if (classNames.length) {
             classNames.sort(alphabetical);
-
             nav += '<h3>Prototypes</h3>';
             nav += '<div id="class-list">';
             nav += '<input id="search" class="search" placeholder="Filter by name" /><ul class=\"list\">';
@@ -421,8 +420,7 @@
 
         for (var longname in helper.longnameToUrl) {
             var classes = find({kind: 'class', longname: longname});
-            // if (classes.length) generate('Prototype: '+classes[0].name, classes, helper.longnameToUrl[longname]);
-            if (classes.length) generate(classes[0].name, classes, helper.longnameToUrl[longname]);
+            if (classes.length) generate('Prototype: '+classes[0].name, classes, helper.longnameToUrl[longname]);
 
             var modules = find({kind: 'module', longname: longname});
             if (modules.length) generate('Module: '+modules[0].name, modules, helper.longnameToUrl[longname]);
