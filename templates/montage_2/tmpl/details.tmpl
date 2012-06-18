@@ -51,13 +51,13 @@
 	<dt class="tag-default">Default Value:</dt>
 	<dd class="tag-default"><ul class="dummy"><li><?js= data.defaultvalue ?></li></ul></dd>
 	<?js } ?>
-<!--
+
 	<?js if (data.meta) {?>
 	<dt class="tag-source">Source:</dt>
-	<dd class="tag-source"><ul class="dummy"><li><?js= meta.filename ?>, line <?js= meta.lineno ?></li></ul></dd>
+    <dd class="tag-source"><ul class="dummy"><li><a href="<?js print('https://github.com/Motorola-Mobility/montage/blob/master/' + meta.path.replace('../montage/', '') + "/" + meta.filename + '#L' + meta.lineno); ?>"><?js= meta.filename ?>, line <?js= meta.lineno ?></a></li></ul></dd>
 	<?js } ?>
 
- -->    <?js if (data.tutorials && tutorials.length) {?>
+     <?js if (data.tutorials && tutorials.length) {?>
     <dt class="tag-tutorial">Tutorials:</dt>
     <dd class="tag-tutorial">
         <ul><?js tutorials.forEach(function(t) { ?>

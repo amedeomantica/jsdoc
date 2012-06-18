@@ -3,7 +3,53 @@
     var template = require('jsdoc/template'),
         fs = require('fs'),
         helper = require('jsdoc/util/templateHelper'),
+        dictionary = require('jsdoc/tag/dictionary'),
         scopeToPunc = { 'static': '.', 'inner': '~', 'instance': '#' };
+
+    // Customizing so that we have reasonably-good-filenames
+    function getNamespace(kind) {
+        if (dictionary.isNamespace(kind)) {
+            return kind+':';
+        }
+        return '';
+    }
+
+
+    var containers = ['class', 'module', 'external', 'namespace', 'mixin'];
+    /**
+     * Turn a doclet into a URL.
+     */
+    helper.createLink = function(doclet) {
+        var url = '', longname, filename;
+
+        if (containers.indexOf(doclet.kind) < 0) {
+            longname = doclet.longname;
+            filename = longname.replace(/[^a-zA-Z 0-9 ]+/g,"_");
+
+            url = filename + helper.fileExtension + '#' + getNamespace(doclet.kind) + doclet.name;
+        }
+        else {
+            longname = doclet.longname;
+            filename = longname.replace(/[^a-zA-Z 0-9 ]+/g,"_");
+
+            url = filename + helper.fileExtension;
+        }
+
+        return url;
+    };
+
+//END Customizing so that we have reasonably-good-filenames
+
+    var alphabetical = function(m1, m2){
+        var nameA = m1.name.toLowerCase(), nameB = m2.name.toLowerCase();
+        if (nameA < nameB) {
+            return -1;
+        }
+        if (nameA == nameB) {
+            return 0;
+        }
+        return 1
+    };
 
     /**
         @global
@@ -94,6 +140,15 @@
             f.signature = (f.signature || '') + '<span class="type-signature">'+(types.length? ' :'+types.join('|') : '')+'</span>';
         }
 
+        function removeQuotesFromReelModule(module) {
+            var moduleName = module.name;
+            if(moduleName.indexOf(".reel\"") !== -1) {
+                moduleName = moduleName.replace(".reel\"", ".reel");
+                moduleName = moduleName.replace("\"", "");
+            }
+            module.name = moduleName;
+        }
+
         function addAttribs(f) {
             var attribs = [];
 
@@ -156,7 +211,12 @@
 	                doclet.see[i] = hashToLink(doclet, seeItem);
 	            });
 	        }
-	    });
+
+           if (doclet.kind === 'module') {
+                removeQuotesFromReelModule(doclet);
+            }
+        });
+
 
 	    data.orderBy(['longname', 'version', 'since']);
 
@@ -183,9 +243,15 @@
             fs.copyFile(fileName, toDir);
         });
 
+        // function linkto(longname, linktext) {
+        //     var url = helper.longnameToUrl[longname];
+        //     return url? '<a href="'+url+'">'+(linktext || longname)+'</a>' : (linktext || longname);
+        // }
+
+
         function linkto(longname, linktext) {
             var url = helper.longnameToUrl[longname];
-            return url? '<a href="'+url+'">'+(linktext || longname)+'</a>' : (linktext || longname);
+            return url? '<a class="prototype" href="'+url+'">'+(linktext || longname)+'</a>' : (linktext || longname);
         }
 
         function tutoriallink(tutorial) {
@@ -236,31 +302,14 @@
         var nav = '',
             seen = {};
 
-        // var moduleNames = find({kind: 'module'});
-        // if (moduleNames.length) {
-        //     nav += '<h3>Modules</h3><ul>';
-        //     moduleNames.forEach(function(m) {
-        //         if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
-        //         seen[m.longname] = true;
-        //     });
-
-        //     nav += '</ul>';
-        // }
-
-        var externalNames = find({kind: 'external'});
-        if (externalNames.length) {
-            nav += '<h3>Externals</h3><ul>';
-            externalNames.forEach(function(e) {
-                if ( !seen.hasOwnProperty(e.longname) ) nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
-                seen[e.longname] = true;
-            });
-
-            nav += '</ul>';
-        }
 
         var classNames = find({kind: 'class'});
         if (classNames.length) {
-            nav += '<h3>Classes</h3><ul>';
+            classNames.sort(alphabetical);
+
+            nav += '<h3>Prototypes</h3>';
+            nav += '<div id="class-list">';
+            nav += '<input id="search" class="search" placeholder="Filter by name" /><ul class=\"list\">';
             classNames.forEach(function(c) {
                 var moduleSameName = find({kind: 'module', longname: c.longname});
                 if (moduleSameName.length) {
@@ -272,12 +321,40 @@
                 seen[c.longname] = true;
             });
 
+            nav += '</ul></div>';
+        }
+
+        var externalNames = find({kind: 'external'});
+        nav = nav + '<h3>Externals</h3>';
+        nav += '<div id="externals-list">';
+        if (externalNames.length) {
+            externalNames.sort(alphabetical);
+            nav += '<input id="search" class="search" placeholder="Filter by name" /><ul class=\"list\">';
+            externalNames.forEach(function(e) {
+                if ( !seen.hasOwnProperty(e.longname) ) nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
+                seen[e.longname] = true;
+            });
+            nav += '</ul>';
+        }
+        nav += '</div>';
+
+        var moduleNames = find({kind: 'module'});
+        if (moduleNames.length) {
+            nav += '<h3>Modules</h3><ul>';
+            moduleNames.sort(alphabetical);
+            moduleNames.forEach(function(m) {
+                if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
+                seen[m.longname] = true;
+            });
+
             nav += '</ul>';
         }
 
+
         var namespaceNames = find({kind: 'namespace'});
         if (namespaceNames.length) {
-            nav += '<h3>Namespaces</h3><ul>';
+            nav += '<h3>Namespaces</h3>';
+            nav += '<ul class=\"list\">';
             namespaceNames.forEach(function(n) {
                 if ( !seen.hasOwnProperty(n.longname) ) nav += '<li>'+linkto(n.longname, n.name)+'</li>';
                 seen[n.longname] = true;
@@ -319,8 +396,11 @@
 
         var globalNames = find({kind: ['member', 'function', 'constant', 'typedef'], 'memberof': {'isUndefined': true}});
 
+        nav = nav + '<h3>Globals</h3>';
+        nav += '<div id="globals-list">';
         if (globalNames.length) {
-            nav += '<h3>Global</h3><ul>';
+            nav += '<input id="search" class="search" placeholder="Filter by name" /><ul class=\"list\">';
+
             globalNames.forEach(function(g) {
                 if ( g.kind !== 'typedef' && !seen.hasOwnProperty(g.longname) ) nav += '<li>'+linkto(g.longname, g.name)+'</li>';
                 seen[g.longname] = true;
@@ -328,6 +408,8 @@
 
             nav += '</ul>';
         }
+
+        nav += '</div>';
 
         // add template helpers
         view.find = find;
@@ -339,7 +421,8 @@
 
         for (var longname in helper.longnameToUrl) {
             var classes = find({kind: 'class', longname: longname});
-            if (classes.length) generate('Class: '+classes[0].name, classes, helper.longnameToUrl[longname]);
+            // if (classes.length) generate('Prototype: '+classes[0].name, classes, helper.longnameToUrl[longname]);
+            if (classes.length) generate(classes[0].name, classes, helper.longnameToUrl[longname]);
 
             var modules = find({kind: 'module', longname: longname});
             if (modules.length) generate('Module: '+modules[0].name, modules, helper.longnameToUrl[longname]);

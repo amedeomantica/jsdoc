@@ -76,9 +76,8 @@
         ?>
 
 
-        <!-- <h3 class="subsection-title">Propery summary</h3> -->
-
-            <table class="zebra-striped">
+        <!-- <h3 class="subsection-title">Property summary</h3> -->
+            <table class="zebra-striped list">
                 <th colspan=2 align=left>Properties</th>
                 <?js
                 members.forEach(function(m) {
@@ -107,6 +106,9 @@
                 <th colspan=2 align=left>Methods</th>
                 <?js
                 functions.forEach(function(m) {
+                    if (doc.kind === 'class' || doc.kind === 'external') {
+                        m.className = doc.name;
+                    }
                     print(self.partial('summary_table.tmpl', m));
                 });
             ?>

@@ -1,4 +1,12 @@
-<tr>
-    <td width="200px"><a href="#<?js= name ?>"><?js if(this.scope === 'static' && this.className) { print( this.className + '.'); } ?><?js= name ?></a></td>
-    <td><?js if (typeof description !== 'undefined') { ?><?js= description.split('.')[0] + "." ?><?js } ?></td>
-</tr>
+<?js if (typeof inherited === 'undefined') { ?>
+    <tr>
+        <td width="200px"><a href="#<?js= name ?>"><?js if(this.scope === 'static' && this.className) { print( this.className + '.'); } ?><?js= name ?></a></td>
+        <td><?js if (typeof description !== 'undefined') { ?><?js= description.split('.')[0] + "." ?><?js } ?></td>
+
+    </tr>
+<?js } else { ?>
+    <tr>
+        <td width="200px"><a href="#<?js= name ?>"><?js if(this.scope === 'static' && this.className) { print( this.className + '.'); } ?><?js= name ?></a></td>
+        <td><?js if (typeof description !== 'undefined') { ?><?js= description.split('.')[0] + "." ?><?js } ?></td>
+    </tr>
+<?js } ?>
