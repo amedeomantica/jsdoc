@@ -6,10 +6,17 @@ html, body {
 }
 
 body {
+<<<<<<< HEAD
 	font: 14px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans serif;
 	line-height: 130%;
 	color: #000;
 	background-color: hsla(0,0%,98%,1);
+=======
+    font: 14px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans serif;
+    line-height: 130%;
+    color: #000;
+    background-color: hsla(0,0%,98%,1);
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 a {
@@ -25,7 +32,11 @@ a:active {
 }
 
 header {
+<<<<<<< HEAD
 	display: block;
+=======
+    display: block;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 
@@ -40,7 +51,11 @@ header {
     display: inline-block;
     color: hsl(0,0%,60%);
     font-size: 30px;
+<<<<<<< HEAD
     line-height: 65px;
+=======
+    line-height: 60px;
+>>>>>>> refs/remotes/origin/jsdoc-update
     padding-left: 80px;
     background-image: url(screening-logo.png);
     background-repeat: no-repeat;
@@ -74,9 +89,15 @@ header {
 
 .class-description {
     font-style: italic;
+<<<<<<< HEAD
 	font-family: Palatino, 'Palatino Linotype', serif;
 	font-size: 130%;
 	line-height: 140%;
+=======
+    font-family: Palatino, 'Palatino Linotype', serif;
+    font-size: 130%;
+    line-height: 140%;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 #main {
@@ -85,6 +106,10 @@ header {
 
 .page-title {
     margin: 10px 0;
+<<<<<<< HEAD
+=======
+    white-space: nowrap;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .zebra-striped {
@@ -106,14 +131,24 @@ header {
 }
 
 section {
+<<<<<<< HEAD
 	display: block;
 	padding: 10px 20px;
     margin-right: 270px;
+=======
+    display: block;
+    padding: 10px 20px;
+    margin-right: 300px;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 section a {
     color: hsl(200,100%,40%);
+<<<<<<< HEAD
     /*text-decoration: none;*/
+=======
+    text-decoration: none;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 section a:hover {
     color: hsl(200,100%,20%);
@@ -122,16 +157,33 @@ section a:active {
     color: hsl(200,100%,0%);
 }
 
+<<<<<<< HEAD
+=======
+section p {
+    margin-right: 10px;
+}
+
+>>>>>>> refs/remotes/origin/jsdoc-update
 .variation {
     display: none;
 }
 
+<<<<<<< HEAD
+=======
+article {
+    margin-left: 300px;
+    width: 100%;
+/*    margin: 10px 10px 10px 1;
+*/}
+
+>>>>>>> refs/remotes/origin/jsdoc-update
 article > dl > dd {
     border-bottom: 1px dashed hsl(0,0%,85%);
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
 article .name {
+<<<<<<< HEAD
     padding-top: 20px;
 }
 
@@ -147,6 +199,24 @@ nav {
 	display: block;
 	float: right;
     width: 250px;
+=======
+    /*padding-top: 20px;*/
+}
+
+.optional:after {
+    content: "opt";
+    font-size: 60%;
+    color: #aaa;
+    font-style: italic;
+    font-weight: lighter;
+}
+
+nav {
+    display: block;
+    float: left;
+    width: 300px;
+    height: 100%;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 nav ul {
@@ -199,53 +269,99 @@ footer {
 
 h1
 {
+<<<<<<< HEAD
 	font-size: 200%;
 	font-weight: bold;
 	letter-spacing: -0.01em;
 	margin: 0px 0 9px 0;
+=======
+    font-size: 200%;
+    font-weight: bold;
+    letter-spacing: -0.01em;
+    margin: 0px 0 9px 0;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 h2
 {
+<<<<<<< HEAD
 	font-size: 170%;
 	line-height: 1;
 	font-weight: bold;
 	letter-spacing: -0.01em;
 	margin: 6px 0 3px 0;
+=======
+    font-size: 170%;
+    line-height: 1;
+    font-weight: bold;
+    letter-spacing: -0.01em;
+    margin: 6px 0 3px 0;
+    white-space: nowrap;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 h3
 {
+<<<<<<< HEAD
 	font-size: 150%;
 	font-weight: bold;
 	letter-spacing: -0.01em;
 	margin: 6px 0 3px 0;
+=======
+    font-size: 150%;
+    font-weight: bold;
+    letter-spacing: -0.01em;
+    margin: 6px 0 3px 0;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 h4
 {
+<<<<<<< HEAD
 	font-size: 130%;
 	font-weight: bold;
 	letter-spacing: -0.01em;
 	margin-top: 16px;
 	margin: 18px 0 3px 0;
 	color: #A35A00;
+=======
+    font-size: 130%;
+    font-weight: bold;
+    letter-spacing: -0.01em;
+    margin-top: 16px;
+    margin: 18px 0 3px 0;
+    color: #A35A00;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 h5, .container-overview .subsection-title
 {
+<<<<<<< HEAD
 	font-size: 120%;
 	font-weight: bold;
 	letter-spacing: -0.01em;
 	margin: 8px 0 3px 0px;
+=======
+    font-size: 120%;
+    font-weight: bold;
+    letter-spacing: -0.01em;
+    margin: 8px 0 3px 0px;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 h6
 {
+<<<<<<< HEAD
 	font-size: 100%;
 	letter-spacing: -0.01em;
 	margin: 6px 0 3px 0;
 	font-style: italic;
+=======
+    font-size: 100%;
+    letter-spacing: -0.01em;
+    margin: 6px 0 3px 0;
+    font-style: italic;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .ancestors { color: #999; }
@@ -257,8 +373,13 @@ h6
 
 .important
 {
+<<<<<<< HEAD
 	font-weight: bold;
 	color: #950B02;
+=======
+    font-weight: bold;
+    color: #950B02;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .yes-def {
@@ -270,7 +391,11 @@ h6
 }
 
 .name, .signature {
+<<<<<<< HEAD
 	font-family: Consolas, "Lucida Console", Monaco, monospace;
+=======
+    font-family: Consolas, "Lucida Console", Monaco, monospace;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .details { margin-top: 14px; }
@@ -284,20 +409,33 @@ h6
 
 .code-caption
 {
+<<<<<<< HEAD
 	font-style: italic;
 	font-family: Palatino, 'Palatino Linotype', serif;
 	font-size: 107%;
 	margin: 0;
+=======
+    font-style: italic;
+    font-family: Palatino, 'Palatino Linotype', serif;
+    font-size: 107%;
+    margin: 0;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .sh_sourceCode
 {
+<<<<<<< HEAD
 	border: 1px solid #ddd;
 	width: 80%;
+=======
+    border: 1px solid #ddd;
+    width: 80%;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .sh_sourceCode code
 {
+<<<<<<< HEAD
 	font-family: Consolas, 'Lucida Console', Monaco, monospace;
 	font-size: 100%;
 	line-height: 18px;
@@ -307,10 +445,22 @@ h6
 	background-color: #fff;
 	color: #000;
 	border-left: 3px #ddd solid;
+=======
+    font-family: Consolas, 'Lucida Console', Monaco, monospace;
+    font-size: 100%;
+    line-height: 18px;
+    display: block;
+    padding: 4px 12px;
+    margin: 0;
+    background-color: #fff;
+    color: #000;
+    border-left: 3px #ddd solid;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .params, .props
 {
+<<<<<<< HEAD
 	border-spacing: 0;
 	border: 0;
 	border-collapse: collapse;
@@ -320,29 +470,79 @@ h6
 	color: #A35A00;
 	font-family: Consolas, 'Lucida Console', Monaco, monospace;
 	font-size: 100%;
+=======
+    border-spacing: 0;
+    border: 0;
+    border-collapse: collapse;
+}
+
+.params .name, .props .name, .name code {
+    color: #A35A00;
+    font-family: Consolas, 'Lucida Console', Monaco, monospace;
+    font-size: 100%;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .params td, .params th, .props td, .props th
 {
+<<<<<<< HEAD
 	border: 1px solid #ddd;
 	margin: 0px;
 	text-align: left;
 	vertical-align: top;
 	padding: 4px 6px;
 	display: table-cell;
+=======
+    border: 1px solid #ddd;
+    margin: 0px;
+    text-align: left;
+    vertical-align: top;
+    padding: 4px 6px;
+    display: table-cell;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .params thead tr, .props thead tr
 {
+<<<<<<< HEAD
 	background-color: #ddd;
 	font-weight: bold;
+=======
+    background-color: #ddd;
+    font-weight: bold;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .params .params thead tr, .props .props thead tr
 {
+<<<<<<< HEAD
 	background-color: #fff;
 	font-weight: bold;
+=======
+    background-color: #fff;
+    font-weight: bold;
+>>>>>>> refs/remotes/origin/jsdoc-update
 }
 
 .params th, .props th { border-right: 1px solid #aaa; }
 .params thead .last, .props thead .last { border-right: 1px solid #ddd; }
+<<<<<<< HEAD
+=======
+
+dl {
+    margin-bottom:24px;
+}
+dl dt {
+    font-weight:bold;
+    margin-bottom:8px;
+}
+dl dd {
+    margin-left:12px;
+    margin-bottom:12px;
+}
+dl dd:last-child, dl:last-child {
+    margin-bottom:0;
+}
+
+
+>>>>>>> refs/remotes/origin/jsdoc-update

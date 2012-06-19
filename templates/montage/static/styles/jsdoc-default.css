@@ -1,0 +1,401 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+	font: 14px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans serif;
+	line-height: 130%;
+	color: #000;
+	background-color: hsla(0,0%,98%,1);
+}
+
+a {
+    color: #444;
+}
+
+a:visited {
+    color: #444;
+}
+
+a:active {
+    color: #444;
+}
+
+header {
+	display: block;
+}
+
+
+#bar {
+    padding: 10px 20px;
+    border: 1px solid #333;
+    background-color: hsla(0,0%,20%,1);
+    border-bottom: 1px solid #fff;
+}
+
+#bar > a > h2 {
+    display: inline-block;
+    color: hsl(0,0%,60%);
+    font-size: 30px;
+    line-height: 60px;
+    padding-left: 80px;
+    background-image: url(montage-logo.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+#bar > a:hover > h2 {
+    color: hsl(0,0%,80%);
+}
+
+#bar .nav {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+#bar .nav a {
+    display: inline-block;
+    padding: 0px 10px;
+    font-size: 15px;
+    line-height: 50px;
+    text-decoration: none;
+    color: hsl(197, 75%, 60%);
+    text-shadow: #000 0 1px;
+}
+#bar .nav a:hover {
+    color: hsl(197, 75%, 80%);
+}
+
+
+
+
+
+.class-description {
+    font-style: italic;
+	font-family: Palatino, 'Palatino Linotype', serif;
+	font-size: 130%;
+	line-height: 140%;
+}
+
+#main {
+    padding: 20px;
+}
+
+.page-title {
+    margin: 10px 0;
+    white-space: nowrap;
+}
+
+.zebra-striped {
+    margin: 10px 0 30px 0;
+    border: 1px solid hsla(0,0%,90%,1);
+    border-spacing: 0;
+    width: 100%;
+}
+.zebra-striped td {
+    padding: 5px;
+    vertical-align: top;
+}
+.zebra-striped tr:nth-child(even) {
+    background-color: hsla(0,0%,94%,1);
+}
+
+.zebra-striped td:nth-child(even) {
+    border-left: 1px solid hsla(0,0%,90%,1);
+}
+
+.zebra-striped th {
+    padding: 15px;
+}
+
+section {
+	display: block;
+	padding: 10px 20px;
+    margin-right: 300px;
+    margin-left: 300px;
+}
+
+section a {
+    color: hsl(200,100%,40%);
+    text-decoration: none;
+}
+section a:hover {
+    color: hsl(200,100%,20%);
+}
+section a:active {
+    color: hsl(200,100%,0%);
+}
+
+section p {
+    margin-right: 10px;
+}
+
+.variation {
+    display: none;
+}
+
+article {
+    /*margin-left: 300px;*/
+    width: 100%;
+/*    margin: 10px 10px 10px 1;
+*/}
+
+article > dl > dd {
+    border-bottom: 1px dashed hsl(0,0%,85%);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+article .name {
+    /*padding-top: 20px;*/
+}
+
+.optional:after {
+	content: "opt";
+	font-size: 60%;
+	color: #aaa;
+	font-style: italic;
+	font-weight: lighter;
+}
+
+nav {
+	display: block;
+	float: left;
+    width: 300px;
+    height: 100%;
+}
+
+nav ul {
+    font-size: 100%;
+    line-height: 17px;
+    padding:0;
+    margin:0;
+    list-style-type:none;
+}
+
+nav h3 {
+    margin: 20px 10px 10px 10px;
+}
+
+nav ul li:first-child a {
+    border-radius: 6px 6px 0 0;
+}
+nav ul li:last-child a {
+    border-radius: 0 0 6px 6px;
+}
+
+nav a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: hsl(200,100%,40%);
+    border-top: 1px solid hsla(0,0%,100%,.7);
+    border-bottom: 1px solid hsla(0,0%,0%,.1);
+    background-color: hsla(0,0%,94%,1);
+}
+
+nav a:visited {
+    color: hsl(200,20%,40%);
+}
+nav a:hover {
+    background-color: hsla(0,0%,97%,1);
+}
+nav a:active {
+    border-top: 1px solid hsla(0,0%,100%,0);
+    background-color: hsla(0,0%,90%,1);
+}
+
+footer {
+    display: block;
+    padding: 6px;
+    margin-top: 12px;
+    font-style: italic;
+    font-size: 90%;
+}
+
+h1
+{
+	font-size: 200%;
+	font-weight: bold;
+	letter-spacing: -0.01em;
+	margin: 0px 0 9px 0;
+}
+
+h2
+{
+	font-size: 170%;
+	line-height: 1;
+	font-weight: bold;
+	letter-spacing: -0.01em;
+	margin: 6px 0 3px 0;
+    white-space: nowrap;
+}
+
+h3
+{
+	font-size: 150%;
+	font-weight: bold;
+	letter-spacing: -0.01em;
+	margin: 6px 0 3px 0;
+}
+
+h4
+{
+	font-size: 130%;
+	font-weight: bold;
+	letter-spacing: -0.01em;
+	margin-top: 16px;
+	margin: 18px 0 3px 0;
+	color: #A35A00;
+}
+
+h5, .container-overview .subsection-title
+{
+	font-size: 120%;
+	font-weight: bold;
+	letter-spacing: -0.01em;
+	margin: 8px 0 3px 0px;
+}
+
+h6
+{
+	font-size: 100%;
+	letter-spacing: -0.01em;
+	margin: 6px 0 3px 0;
+	font-style: italic;
+}
+
+.ancestors { color: #999; }
+.ancestors a
+{
+    color: #aaa !important;
+    text-decoration: none;
+}
+
+.important
+{
+	font-weight: bold;
+	color: #950B02;
+}
+
+.yes-def {
+    text-indent: -1000px;
+}
+
+.type-signature {
+    color: #aaa;
+}
+
+.name, .signature {
+	font-family: Consolas, "Lucida Console", Monaco, monospace;
+}
+
+.details { margin-top: 14px; }
+.details dt { width:100px; float:left; border-left: 2px solid #DDD; padding-left: 10px;  padding-top: 6px; }
+.details dd { margin-left: 50px; }
+.details ul { margin: 0; }
+.details ul { list-style-type: none; }
+.details li { margin-left: 30px; padding-top: 6px; }
+
+.description { margin-left: -16px; }
+
+.code-caption
+{
+	font-style: italic;
+	font-family: Palatino, 'Palatino Linotype', serif;
+	font-size: 107%;
+	margin: 0;
+}
+
+.sh_sourceCode
+{
+	border: 1px solid #ddd;
+	width: 80%;
+}
+
+.sh_sourceCode code
+{
+	font-family: Consolas, 'Lucida Console', Monaco, monospace;
+	font-size: 100%;
+	line-height: 18px;
+	display: block;
+	padding: 4px 12px;
+	margin: 0;
+	background-color: #fff;
+	color: #000;
+	border-left: 3px #ddd solid;
+}
+
+.params, .props
+{
+	border-spacing: 0;
+	border: 0;
+	border-collapse: collapse;
+}
+
+.params .name, .props .name, .name code {
+	color: #A35A00;
+	font-family: Consolas, 'Lucida Console', Monaco, monospace;
+	font-size: 100%;
+}
+
+.params td, .params th, .props td, .props th
+{
+	border: 1px solid #ddd;
+	margin: 0px;
+	text-align: left;
+	vertical-align: top;
+	padding: 4px 6px;
+	display: table-cell;
+}
+
+.params thead tr, .props thead tr
+{
+	background-color: #ddd;
+	font-weight: bold;
+}
+
+.params .params thead tr, .props .props thead tr
+{
+	background-color: #fff;
+	font-weight: bold;
+}
+
+.params th, .props th { border-right: 1px solid #aaa; }
+.params thead .last, .props thead .last { border-right: 1px solid #ddd; }
+
+dl {
+    margin-bottom:24px;
+}
+dl dt {
+    font-weight:bold;
+    margin-bottom:8px;
+}
+dl dd {
+    margin-left:12px;
+    margin-bottom:12px;
+}
+dl dd:last-child, dl:last-child {
+    margin-bottom:0;
+}
+.search{
+    outline: none;
+    box-sizing: border-box;
+    font-size: 12px;
+    width: 20em;
+    height: 2.5em;
+    padding: 0.5em;
+    border: 1px solid #b3b3b3;
+    border-radius: 3px;
+    background-color: #fff;
+}
+
+.searchhover {
+    border-color: #ccc;
+}
+
+.searchfocus {
+    border-color: #7f7f7f;
+}
+

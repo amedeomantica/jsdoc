@@ -51,6 +51,12 @@ exports.defineTags = function(dictionary) {
     // I add on to that
     dictionary.defineTag('augments', {
         mustHaveValue: true,
+        // Allow augments value to be specified as a normal type, e.g. {Type}
+        onTagText: function(text) {
+            var type = require('jsdoc/tag/type'),
+                [tp, tx] = type.getTagType(text);
+            return tp || text;
+        },
         onTagged: function(doclet, tag) {
             doclet.augment( firstWordOf(tag.value) );
         }
@@ -577,7 +583,11 @@ function setDocletDescriptionToValue(doclet, tag) {
 }
 
 function setNameToFile(doclet, tag) {
-    if (doclet.meta.filename) { doclet.addTag( 'name', 'file:'+doclet.meta.filename ); }
+    if (doclet.meta.filename) { 
+        var name = 'file:';
+        if (doclet.meta.path) { name += doclet.meta.path + java.lang.System.getProperty("file.separator"); }
+        doclet.addTag( 'name', name + doclet.meta.filename );
+    }
 }
 
 function setDocletMemberof(doclet, tag) {
@@ -599,7 +609,7 @@ function applyNamespace(docletOrNs, tag) {
 }
 
 function setDocletNameToFilename(doclet, tag) {
-    var name = doclet.meta.filename;
+    var name = (doclet.meta.path ? (doclet.meta.path + java.lang.System.getProperty("file.separator")) : "") + doclet.meta.filename;
     name = name.replace(/\.js$/i, '');
     
     for (var i = 0, len = env.opts._.length; i < len; i++) {

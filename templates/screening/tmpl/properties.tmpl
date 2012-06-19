@@ -1,5 +1,9 @@
 <?js
+<<<<<<< HEAD
     var props = this;
+=======
+    var props = data;
+>>>>>>> refs/remotes/origin/jsdoc-update
     
     /* sort subprops under their parent props (like opts.classname) */
     var parentProp = null;
@@ -61,6 +65,10 @@
 	
 	<tbody>
 	<?js
+<<<<<<< HEAD
+=======
+        var self = this;
+>>>>>>> refs/remotes/origin/jsdoc-update
 	    props.forEach(function(prop) {
 	        if (!prop) { return; }
 	?>
@@ -73,16 +81,24 @@
             <td class="type">
             <?js
                 if (prop.type && prop.type.names) {
+<<<<<<< HEAD
                     prop.type.names.forEach(function(name, i) {
                         print( linkto(name, htmlsafe(name)) );
                         if (i < prop.type.names.length-1) { print(' | '); }
                     }); 
+=======
+                    prop.type.names.forEach(function(name, i) { ?>
+                        <?js= self.linkto(name, self.htmlsafe(name)) ?>
+                        <?js if (i < prop.type.names.length-1) { ?> | <?js } ?>
+                    <?js }); 
+>>>>>>> refs/remotes/origin/jsdoc-update
                 }
             ?>
             </td>
             
             <?js if (props.hasAttributes) {?>
                 <td class="attributes">
+<<<<<<< HEAD
                 <?js
                     if (prop.optional) {
                         print( '&lt;optional><br>' );
@@ -92,11 +108,21 @@
                         print( '&lt;nullable><br>' );
                     }
                 ?>
+=======
+                <?js if (prop.optional) { ?>
+                    &lt;optional><br>
+                <?js } ?>
+                    
+                <?js if (prop.nullable) { ?>
+                    &lt;nullable><br>
+                <?js } ?>
+>>>>>>> refs/remotes/origin/jsdoc-update
                 </td>
             <?js } ?>
             
             <?js if (props.hasDefault) {?>
                 <td class="default">
+<<<<<<< HEAD
                 <?js
                     if (typeof prop.defaultvalue !== 'undefined') {
                         print( htmlsafe(prop.defaultvalue) );
@@ -108,6 +134,17 @@
             <td class="description last"><?js= prop.description ?><?js if (prop.subprops) {
                 print( '<h6>Properties</h6>' + render('properties.tmpl', prop.subprops) );
             }?></td>
+=======
+                <?js if (typeof prop.defaultvalue !== 'undefined') { ?>
+                    <?js= self.htmlsafe(prop.defaultvalue) ?>
+                <?js } ?>
+                </td>
+            <?js } ?>
+            
+            <td class="description last"><?js= prop.description ?><?js if (prop.subprops) { ?>
+                <h6>Properties</h6><?js= self.partial('properties.tmpl', prop.subprops) ?>
+            <?js } ?></td>
+>>>>>>> refs/remotes/origin/jsdoc-update
         </tr>
 	
 	<?js }); ?>

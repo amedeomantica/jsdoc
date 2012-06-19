@@ -1,5 +1,6 @@
 (function() {
 
+<<<<<<< HEAD
     var _ = require('underscore/underscore'),
         template = require('underscore/template'),
         fs = require('fs'),
@@ -55,10 +56,18 @@ helper.createLink = function(doclet) {
         return 1
     };
 
+=======
+    var template = require('jsdoc/template'),
+        fs = require('fs'),
+        helper = require('jsdoc/util/templateHelper'),
+        scopeToPunc = { 'static': '.', 'inner': '~', 'instance': '#' };
+
+>>>>>>> refs/remotes/origin/jsdoc-update
     /**
         @global
         @param {TAFFY} data See <http://taffydb.com/>.
         @param {object} opts
+<<<<<<< HEAD
      */
     publish = function(data, opts) {
         var out = '',
@@ -79,6 +88,19 @@ helper.createLink = function(doclet) {
             return renderFunction.call(partialData, partialData);
         }
         render.cache = {};
+=======
+        @param {Tutorial} tutorials
+     */
+    publish = function(data, opts, tutorials) {
+        var out = '',
+            view = new template.Template(__dirname + '/templates/screening_2/tmpl');
+
+        // set up templating
+        view.layout = 'layout.tmpl';
+
+        // set up tutorials for helper
+        helper.setTutorials(tutorials);
+>>>>>>> refs/remotes/origin/jsdoc-update
 
         function find(spec) {
             return data.get( data.find(spec) );
@@ -130,7 +152,11 @@ helper.createLink = function(doclet) {
             }
 
             if (returnTypes && returnTypes.length) {
+<<<<<<< HEAD
                 returnTypes = _.map(returnTypes, function(r) {
+=======
+                returnTypes = returnTypes.map(function(r) {
+>>>>>>> refs/remotes/origin/jsdoc-update
                     return linkto(r);
                 });
             }
@@ -144,6 +170,7 @@ helper.createLink = function(doclet) {
                 types = f.type.names;
             }
 
+<<<<<<< HEAD
             f.signature = (f.signature || '') + '<span class="type-signature">'+htmlsafe(types.length? ' :'+types.join('|') : '')+'</span>';
         }
 
@@ -154,11 +181,27 @@ helper.createLink = function(doclet) {
                 moduleName = moduleName.replace("\"", "");
             }
             module.name = moduleName;
+=======
+            if (types && types.length) {
+                types = types.map(function(t) {
+                    return linkto(t, htmlsafe(t));
+                });
+            }
+
+            f.signature = (f.signature || '') + '<span class="type-signature">'+(types.length? ' :'+types.join('|') : '')+'</span>';
+>>>>>>> refs/remotes/origin/jsdoc-update
         }
 
         function addAttribs(f) {
             var attribs = [];
 
+<<<<<<< HEAD
+=======
+            if (f.virtual) {
+                attribs.push('virtual');
+            }
+
+>>>>>>> refs/remotes/origin/jsdoc-update
             if (f.access && f.access !== 'public') {
                 attribs.push(f.access);
             }
@@ -191,6 +234,7 @@ helper.createLink = function(doclet) {
         //}
 
 	    data.forEach(function(doclet) {
+<<<<<<< HEAD
 	        doclet.signature = '';
             doclet.attribs = '';
 
@@ -203,6 +247,10 @@ helper.createLink = function(doclet) {
 	            addSignatureType(doclet);
 	            addAttribs(doclet)
 	        }
+=======
+             doclet.attribs = '';
+
+>>>>>>> refs/remotes/origin/jsdoc-update
 
 	        if (doclet.examples) {
 	            doclet.examples = doclet.examples.map(function(example) {
@@ -219,16 +267,23 @@ helper.createLink = function(doclet) {
                     };
                 });
 	        }
+<<<<<<< HEAD
 	        else if (doclet.see) {
+=======
+	        if (doclet.see) {
+>>>>>>> refs/remotes/origin/jsdoc-update
 	            doclet.see.forEach(function(seeItem, i) {
 	                doclet.see[i] = hashToLink(doclet, seeItem);
 	            });
 	        }
+<<<<<<< HEAD
 
             if (doclet.kind === 'module') {
                 removeQuotesFromReelModule(doclet);
             }
 
+=======
+>>>>>>> refs/remotes/origin/jsdoc-update
 	    });
 
 	    data.orderBy(['longname', 'version', 'since']);
@@ -241,13 +296,21 @@ helper.createLink = function(doclet) {
 	        namespaces = find({kind: 'namespace'});
 
         var outdir = opts.destination;
+<<<<<<< HEAD
         if (packageInfo) {
+=======
+        if (packageInfo && packageInfo.name) {
+>>>>>>> refs/remotes/origin/jsdoc-update
             outdir += '/' + packageInfo.name + '/' + packageInfo.version + '/';
         }
         fs.mkPath(outdir);
 
         // copy static files to outdir
+<<<<<<< HEAD
         var fromDir = __dirname + '/templates/screening/static',
+=======
+        var fromDir = __dirname + '/templates/screening_2/static',
+>>>>>>> refs/remotes/origin/jsdoc-update
             staticFiles = fs.ls(fromDir, 3);
 
         staticFiles.forEach(function(fileName) {
@@ -261,6 +324,15 @@ helper.createLink = function(doclet) {
             return url? '<a href="'+url+'">'+(linktext || longname)+'</a>' : (linktext || longname);
         }
 
+<<<<<<< HEAD
+=======
+        function tutoriallink(tutorial) {
+            return helper.toTutorial(tutorial);
+        }
+
+        var containers = ['class', 'module', 'external', 'namespace', 'mixin'];
+
+>>>>>>> refs/remotes/origin/jsdoc-update
         data.forEach(function(doclet) {
             var url = helper.createLink(doclet);
             helper.registerLink(doclet.longname, url);
@@ -286,10 +358,26 @@ helper.createLink = function(doclet) {
         // do this after the urls have all been generated
         data.forEach(function(doclet) {
             doclet.ancestors = generateAncestry(doclet);
+<<<<<<< HEAD
+=======
+
+            doclet.signature = '';
+
+	        if (doclet.kind === 'member') {
+	            addSignatureType(doclet);
+	            addAttribs(doclet)
+	        }
+
+	        if (doclet.kind === 'constant') {
+	            addSignatureType(doclet);
+	            addAttribs(doclet)
+	        }
+>>>>>>> refs/remotes/origin/jsdoc-update
         });
 
         var nav = '',
             seen = {};
+<<<<<<< HEAD
 //
 //        var moduleNames = find({kind: 'module'});
 //        if (moduleNames.length) {
@@ -307,6 +395,34 @@ helper.createLink = function(doclet) {
         if (classNames.length) {
             classNames.sort(alphabetical);
             nav = nav + '<h3>Prototypes</h3><ul>';
+=======
+
+        // var moduleNames = find({kind: 'module'});
+        // if (moduleNames.length) {
+        //     nav += '<h3>Modules</h3><ul>';
+        //     moduleNames.forEach(function(m) {
+        //         if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
+        //         seen[m.longname] = true;
+        //     });
+
+        //     nav += '</ul>';
+        // }
+
+        var externalNames = find({kind: 'external'});
+        if (externalNames.length) {
+            nav += '<h3>Externals</h3><ul>';
+            externalNames.forEach(function(e) {
+                if ( !seen.hasOwnProperty(e.longname) ) nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
+                seen[e.longname] = true;
+            });
+
+            nav += '</ul>';
+        }
+
+        var classNames = find({kind: 'class'});
+        if (classNames.length) {
+            nav += '<h3>Prototypes</h3><ul>';
+>>>>>>> refs/remotes/origin/jsdoc-update
             classNames.forEach(function(c) {
                 var moduleSameName = find({kind: 'module', longname: c.longname});
                 if (moduleSameName.length) {
@@ -318,6 +434,7 @@ helper.createLink = function(doclet) {
                 seen[c.longname] = true;
             });
 
+<<<<<<< HEAD
             nav = nav + '</ul>';
         }
 
@@ -331,59 +448,116 @@ helper.createLink = function(doclet) {
             });
 
             nav = nav + '</ul>';
+=======
+            nav += '</ul>';
+>>>>>>> refs/remotes/origin/jsdoc-update
         }
 
         var namespaceNames = find({kind: 'namespace'});
         if (namespaceNames.length) {
+<<<<<<< HEAD
             namespaceNames.sort(alphabetical);
             nav = nav + '<h3>Namespaces</h3><ul>';
+=======
+            nav += '<h3>Namespaces</h3><ul>';
+>>>>>>> refs/remotes/origin/jsdoc-update
             namespaceNames.forEach(function(n) {
                 if ( !seen.hasOwnProperty(n.longname) ) nav += '<li>'+linkto(n.longname, n.name)+'</li>';
                 seen[n.longname] = true;
             });
 
+<<<<<<< HEAD
             nav = nav + '</ul>';
+=======
+            nav += '</ul>';
+>>>>>>> refs/remotes/origin/jsdoc-update
         }
 
 //         var constantNames = find({kind: 'constants'});
 //         if (constantNames.length) {
+<<<<<<< HEAD
 //             nav = nav + '<h3>Constants</h3><ul>';
+=======
+//             nav += '<h3>Constants</h3><ul>';
+>>>>>>> refs/remotes/origin/jsdoc-update
 //             constantNames.forEach(function(c) {
 //                 if ( !seen.hasOwnProperty(c.longname) ) nav += '<li>'+linkto(c.longname, c.name)+'</li>';
 //                 seen[c.longname] = true;
 //             });
 //
+<<<<<<< HEAD
 //             nav = nav + '</ul>';
+=======
+//             nav += '</ul>';
+>>>>>>> refs/remotes/origin/jsdoc-update
 //         }
 
         var mixinNames = find({kind: 'mixin'});
         if (mixinNames.length) {
+<<<<<<< HEAD
             mixinNames.sort(alphabetical);
             nav = nav + '<h3>Mixins</h3><ul>';
+=======
+            nav += '<h3>Mixins</h3><ul>';
+>>>>>>> refs/remotes/origin/jsdoc-update
             mixinNames.forEach(function(m) {
                 if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
                 seen[m.longname] = true;
             });
 
+<<<<<<< HEAD
             nav = nav + '</ul>';
+=======
+            nav += '</ul>';
+        }
+
+        if (tutorials.children.length) {
+            nav += '<h3>Tutorials</h3><ul>';
+            tutorials.children.forEach(function(t) {
+                nav += '<li>'+tutoriallink(t.name)+'</li>';
+            });
+
+            nav += '</ul>';
+>>>>>>> refs/remotes/origin/jsdoc-update
         }
 
         var globalNames = find({kind: ['member', 'function', 'constant', 'typedef'], 'memberof': {'isUndefined': true}});
 
         if (globalNames.length) {
+<<<<<<< HEAD
             globalNames.sort(alphabetical);
             nav = nav + '<h3>Global</h3><ul>';
+=======
+            nav += '<h3>Global</h3><ul>';
+>>>>>>> refs/remotes/origin/jsdoc-update
             globalNames.forEach(function(g) {
                 if ( g.kind !== 'typedef' && !seen.hasOwnProperty(g.longname) ) nav += '<li>'+linkto(g.longname, g.name)+'</li>';
                 seen[g.longname] = true;
             });
 
+<<<<<<< HEAD
             nav = nav + '</ul>';
         }
 
         for (var longname in helper.longnameToUrl) {
             var classes = find({kind: 'class', longname: longname});
             if (classes.length) generate('Prototype: '+classes[0].name, classes, helper.longnameToUrl[longname]);
+=======
+            nav += '</ul>';
+        }
+
+        // add template helpers
+        view.find = find;
+        view.linkto = linkto;
+        view.tutoriallink = tutoriallink;
+        view.htmlsafe = htmlsafe;
+        // once for all
+        view.nav = nav;
+
+        for (var longname in helper.longnameToUrl) {
+            var classes = find({kind: 'class', longname: longname});
+            if (classes.length) generate('Prototypes: '+classes[0].name, classes, helper.longnameToUrl[longname]);
+>>>>>>> refs/remotes/origin/jsdoc-update
 
             var modules = find({kind: 'module', longname: longname});
             if (modules.length) generate('Module: '+modules[0].name, modules, helper.longnameToUrl[longname]);
@@ -402,6 +576,7 @@ helper.createLink = function(doclet) {
         }
 
         if (globals.length) generate('Global', [{kind: 'globalobj'}], 'global.html');
+<<<<<<< HEAD
         generateIndex('Index', 'index.html');
 
         function generate(title, docs, filename) {
@@ -419,6 +594,20 @@ helper.createLink = function(doclet) {
 
             var path = outdir + '/' + filename,
                 html = containerTemplate.call(data, data);
+=======
+
+        generateIndex('Index', 'index.html');
+
+
+        function generate(title, docs, filename) {
+            var data = {
+                title: title,
+                docs: docs
+            };
+
+            var path = outdir + '/' + filename,
+                html = view.render('container.tmpl', data);
+>>>>>>> refs/remotes/origin/jsdoc-update
 
             html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
 
@@ -427,6 +616,7 @@ helper.createLink = function(doclet) {
 
         function generateIndex(title, filename) {
             var classes = find({kind: 'class', longname: longname});
+<<<<<<< HEAD
             var data = {
                 title: title,
                 docs: classes,
@@ -442,12 +632,56 @@ helper.createLink = function(doclet) {
             var filename = "index.html";
             var path = outdir + '/' + filename,
                 html = indexTemplate.call(data, data);
+=======
+
+            for (var foo in classes) {
+                console.log(foo);
+            };
+
+            var data = {
+                title: title,
+                docs: classes
+            };
+
+            var path = outdir + '/' + filename,
+                html = view.render('index.tmpl', data);
+>>>>>>> refs/remotes/origin/jsdoc-update
 
             html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
 
             fs.writeFileSync(path, html)
+<<<<<<< HEAD
 
         }
+=======
+        }
+
+        function generateTutorial(title, tutorial, filename) {
+            var data = {
+                title: title,
+                header: tutorial.title,
+                content: tutorial.parse(),
+                children: tutorial.children
+            };
+
+            var path = outdir + '/' + filename,
+                html = view.render('tutorial.tmpl', data);
+
+            // yes, you can use {@link} in tutorials too!
+            html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
+
+            fs.writeFileSync(path, html)
+        }
+
+        // tutorials can have only one parent so there is no risk for loops
+        function saveChildren(node) {
+            node.children.forEach(function(child) {
+                generateTutorial('Tutorial: '+child.title, child, helper.tutorialToUrl(child.name));
+                saveChildren(child);
+            });
+        }
+        saveChildren(tutorials);
+>>>>>>> refs/remotes/origin/jsdoc-update
     }
 
     function hashToLink(doclet, hash) {
@@ -459,4 +693,8 @@ helper.createLink = function(doclet) {
         return '<a href="'+url+'">'+hash+'</a>';
     }
 
+<<<<<<< HEAD
 })();
+=======
+})();
+>>>>>>> refs/remotes/origin/jsdoc-update

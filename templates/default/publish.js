@@ -1,13 +1,10 @@
 (function() {
 
-    var _ = require('underscore/underscore'),
-        template = require('underscore/template'),
+    var template = require('jsdoc/template'),
         fs = require('fs'),
         helper = require('jsdoc/util/templateHelper'),
-        scopeToPunc = { 'static': '.', 'inner': '~', 'instance': '#' };
-        
-        template.settings.evaluate    = /<\?js([\s\S]+?)\?>/g;
-        template.settings.interpolate = /<\?js=([\s\S]+?)\?>/g;
+        scopeToPunc = { 'static': '.', 'inner': '~', 'instance': '#' },
+        hasOwnProperty = Object.prototype.hasOwnProperty;
     
     /**
         @global
@@ -16,28 +13,17 @@
         @param {Tutorial} tutorials
      */
     publish = function(data, opts, tutorials) {
+        var defaultTemplatePath = 'templates/default';
+        var templatePath = (opts.template) ? opts.template : defaultTemplate;
         var out = '',
-            containerTemplate = template.render(fs.readFileSync(__dirname + '/templates/default/tmpl/container.tmpl')),
-            tutorialTemplate = template.render(fs.readFileSync(__dirname + '/templates/default/tmpl/tutorial.tmpl'));
+            view = new template.Template(__dirname + '/' + templatePath + '/tmpl');
         
+        // set up templating
+        view.layout = 'layout.tmpl';
+
         // set up tutorials for helper
         helper.setTutorials(tutorials);
 
-        function render(tmpl, partialData) {
-            var renderFunction = arguments.callee.cache[tmpl];
-            if (!renderFunction) {
-                renderFunction = arguments.callee.cache[tmpl] = template.render(fs.readFileSync(__dirname + '/templates/default/tmpl/'+tmpl));
-            }
-            partialData.render = arguments.callee;
-            partialData.find = find;
-            partialData.linkto = linkto;
-            partialData.tutoriallink = tutoriallink;
-            partialData.htmlsafe = htmlsafe;
-            
-            return renderFunction.call(partialData, partialData);
-        }
-        render.cache = {};
-        
         function find(spec) {
             return data.get( data.find(spec) );
         }
@@ -88,7 +74,7 @@
             }
             
             if (returnTypes && returnTypes.length) {
-                returnTypes = _.map(returnTypes, function(r) {
+                returnTypes = returnTypes.map(function(r) {
                     return linkto(r);
                 });
             }
@@ -103,7 +89,7 @@
             }
             
             if (types && types.length) {
-                types = _.map(types, function(t) {
+                types = types.map(function(t) {
                     return linkto(t, htmlsafe(t));
                 });
             } 
@@ -185,13 +171,13 @@
 	        namespaces = find({kind: 'namespace'});
 
         var outdir = opts.destination;
-        if (packageInfo) {
+        if (packageInfo && packageInfo.name) {
             outdir += '/' + packageInfo.name + '/' + packageInfo.version + '/';
         }
         fs.mkPath(outdir);
 
         // copy static files to outdir
-        var fromDir = __dirname + '/templates/default/static',
+        var fromDir = __dirname + '/' + templatePath + '/static',
             staticFiles = fs.ls(fromDir, 3);
             
         staticFiles.forEach(function(fileName) {
@@ -250,14 +236,17 @@
 	        }
         });
         
-        var nav = '',
+        var nav = '<h2><a href="index.html">Index</a></h2>',
             seen = {};
         
         var moduleNames = find({kind: 'module'});
+        moduleNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (moduleNames.length) {
             nav += '<h3>Modules</h3><ul>';
             moduleNames.forEach(function(m) {
-                if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
+                if ( !hasOwnProperty.call(seen, m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
                 seen[m.longname] = true;
             });
             
@@ -265,10 +254,13 @@
         }
         
         var externalNames = find({kind: 'external'});
+        externalNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (externalNames.length) {
             nav += '<h3>Externals</h3><ul>';
             externalNames.forEach(function(e) {
-                if ( !seen.hasOwnProperty(e.longname) ) nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
+                if ( !hasOwnProperty.call(seen, e.longname) ) nav += '<li>'+linkto( e.longname, e.name.replace(/(^"|"$)/g, '') )+'</li>';
                 seen[e.longname] = true;
             });
             
@@ -276,16 +268,23 @@
         }
     
         var classNames = find({kind: 'class'});
+        classNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (classNames.length) {
-            nav += '<h3>Classes</h3><ul>';
+            var moduleClasses = 0;
             classNames.forEach(function(c) {
                 var moduleSameName = find({kind: 'module', longname: c.longname});
                 if (moduleSameName.length) {
-                    c.name = c.name.replace('module:', 'require(')+')';
+                    c.name = c.name.replace('module:', 'require("')+'")';
+                    moduleClasses++;
                     moduleSameName[0].module = c;
                 }
-                
-                if (!seen.hasOwnProperty(c.longname) ) nav += '<li>'+linkto(c.longname, c.name)+'</li>';
+                if (moduleClasses !== -1 && moduleClasses < classNames.length) {
+                    nav += '<h3>Classes</h3><ul>';
+                    moduleClasses = -1;
+                }
+                if ( !hasOwnProperty.call(seen, c.longname) ) nav += '<li>'+linkto(c.longname, c.name)+'</li>';
                 seen[c.longname] = true;
             });
             
@@ -293,10 +292,13 @@
         }
         
         var namespaceNames = find({kind: 'namespace'});
+        namespaceNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (namespaceNames.length) {
             nav += '<h3>Namespaces</h3><ul>';
             namespaceNames.forEach(function(n) {
-                if ( !seen.hasOwnProperty(n.longname) ) nav += '<li>'+linkto(n.longname, n.name)+'</li>';
+                if ( !hasOwnProperty.call(seen, n.longname) ) nav += '<li>'+linkto(n.longname, n.name)+'</li>';
                 seen[n.longname] = true;
             });
             
@@ -307,7 +309,7 @@
 //         if (constantNames.length) {
 //             nav += '<h3>Constants</h3><ul>';
 //             constantNames.forEach(function(c) {
-//                 if ( !seen.hasOwnProperty(c.longname) ) nav += '<li>'+linkto(c.longname, c.name)+'</li>';
+//                 if ( !hasOwnProperty.call(seen, c.longname) ) nav += '<li>'+linkto(c.longname, c.name)+'</li>';
 //                 seen[c.longname] = true;
 //             });
 //             
@@ -315,10 +317,13 @@
 //         }
         
         var mixinNames = find({kind: 'mixin'});
+        mixinNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (mixinNames.length) {
             nav += '<h3>Mixins</h3><ul>';
             mixinNames.forEach(function(m) {
-                if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
+                if ( !hasOwnProperty.call(seen, m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
                 seen[m.longname] = true;
             });
             
@@ -335,17 +340,28 @@
         }
         
         var globalNames = find({kind: ['member', 'function', 'constant', 'typedef'], 'memberof': {'isUndefined': true}});
-
+        globalNames.sort(function(a, b) {
+            return a.name > b.name;
+        });
         if (globalNames.length) {
             nav += '<h3>Global</h3><ul>';
+            
             globalNames.forEach(function(g) {
-                if ( g.kind !== 'typedef' && !seen.hasOwnProperty(g.longname) ) nav += '<li>'+linkto(g.longname, g.name)+'</li>';
+                if ( g.kind !== 'typedef' && !hasOwnProperty.call(seen, g.longname) ) nav += '<li>'+linkto(g.longname, g.name)+'</li>';
                 seen[g.longname] = true;
             });
             
             nav += '</ul>';
         }
         
+        // add template helpers
+        view.find = find;
+        view.linkto = linkto;
+        view.tutoriallink = tutoriallink;
+        view.htmlsafe = htmlsafe;
+        // once for all
+        view.nav = nav;
+
         for (var longname in helper.longnameToUrl) {
             var classes = find({kind: 'class', longname: longname});
             if (classes.length) generate('Class: '+classes[0].name, classes, helper.longnameToUrl[longname]);
@@ -368,23 +384,22 @@
 
         if (globals.length) generate('Global', [{kind: 'globalobj'}], 'global.html');
         
+        // index page displays information from package.json and lists files
+        var files = find({kind: 'file'}),
+            packages = find({kind: 'package'});
+        generate('Index',
+			[{kind: 'mainpage', longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'}].concat(packages).concat(files)
+		, 'index.html');
+        
         
         function generate(title, docs, filename) {
             var data = {
                 title: title,
-                docs: docs,
-                nav: nav,
-                
-                // helpers
-                render: render,
-                find: find,
-                linkto: linkto,
-                tutoriallink: tutoriallink,
-                htmlsafe: htmlsafe
+                docs: docs
             };
             
             var path = outdir + '/' + filename,
-                html = containerTemplate.call(data, data);
+                html = view.render('container.tmpl', data);
             
             html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
             
@@ -396,19 +411,11 @@
                 title: title,
                 header: tutorial.title,
                 content: tutorial.parse(),
-                children: tutorial.children,
-                nav: nav,
-                
-                // helpers
-                render: render,
-                find: find,
-                linkto: linkto,
-                tutoriallink: tutoriallink,
-                htmlsafe: htmlsafe
+                children: tutorial.children
             };
             
             var path = outdir + '/' + filename,
-                html = tutorialTemplate.call(data, data);
+                html = view.render('tutorial.tmpl', data);
             
             // yes, you can use {@link} in tutorials too!
             html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
@@ -420,6 +427,7 @@
         function saveChildren(node) {
             node.children.forEach(function(child) {
                 generateTutorial('Tutorial: '+child.title, child, helper.tutorialToUrl(child.name));
+                saveChildren(child);
             });
         }
         saveChildren(tutorials);

@@ -3,18 +3,29 @@ JSDoc 3 for Montage and Screening
 
 This is a fork of JSDoc 3, an API documentation generator, to support Montage and Screening products. 
 
+### Pull Requesters: Please read HOW_TO_CONTRIBUTE.md 
+
 Installation
 ------------
 
 
-Clone JSDoc from GitHub. 
+To test that jsdoc is working, change your working directory to the jsdoc folder
+and run the following command on Windows:
 
 ```git clone git@github.com:Motorola-Mobility/jsdoc.git```
 
-Preferably, the clone lives in same parent folder that contains the `montage/` and `screening/` source folders. 
-You will need to adjust your paths below accordingly if your folder structure differs.
+... or on a Max OSX or *nix platform:
 
-In a terminal window, navigate to the ```/jsdoc``` folder you just cloned.
+    ./jsdoc -T
+
+If you can't get the short-form commands to work, try invoking Java directly:
+
+    java -cp lib/js.jar org.mozilla.javascript.tools.shell.Main \
+    -modules node_modules -modules rhino_modules -modules . \
+    jsdoc.js -T
+
+Usage
+-----
 
 **To generate the entire Montage API doc set**:
 
@@ -56,6 +67,8 @@ configured to override that included Rhino and point to some older version of
 Rhino instead. If this is the case, simply correct the CLASSPATH to remove the
 older Rhino.
 
+The version of rhino distributed with JSDoc3 can be found here:  https://github.com/jannon/rhino
+
 Debugging
 ---------
 
@@ -63,21 +76,20 @@ Rhino is not always very friendly when it comes to reporting errors in
 JavaScript. Luckily it comes with a full-on debugger included that can be much
 more useful than a simple stack trace. To invoke JSDoc with the debugger do the following:
 
-1. Open the `jsdoc/jsdoc` script in a text editor.
-2. Comment the first `java` command string (which launches the standard JSDoc utility), and uncomment the second one:
+    jsdoc --debug
 
-```
-#!/bin/sh
+or the long form version:
 
-# rhino discards the path to the current script file, so we must add it back
-BASEDIR=`dirname $0`
-#java -classpath ${BASEDIR}/lib/js.jar org.mozilla.javascript.tools.shell.Main -modules ${BASEDIR}/node_modules -modules ${BASEDIR}/rhino_modules -modules ${BASEDIR} ${BASEDIR}/jsdoc.js --dirname=${BASEDIR} $@
+    $ java -classpath lib/js.jar \
+    org.mozilla.javascript.tools.debugger.Main -debug \
+    -modules node_modules -modules rhino_modules -modules . \
+    jsdoc.js \
+    your/script.js
 
-java -classpath ${BASEDIR}/lib/js.jar org.mozilla.javascript.tools.debugger.Main -debug -modules ${BASEDIR}/node_modules -modules ${BASEDIR}/rhino_modules  -modules ${BASEDIR} ${BASEDIR}/jsdoc.js --dirname=${BASEDIR} $@
-```
+Note: ```--debug``` must be the first argument to the short form command
 
-3. Run ```jsdoc``` from the terminal again.
-This will open a debugging window. Choose "Break on Exceptions" from the "Debug" menu, then press the "Run" button. If there is an error, you should see exactly
+This will open a debugging window. Choose "Break on Exceptions" from the "Debug"
+menu, then press the "Run" button. If there is an error, you should see exactly
 where it is in the source code.
 
 See Also
@@ -86,7 +98,7 @@ See Also
 Project Documentation: <http://usejsdoc.org/> (under development)  
 Project Documentation Source: <https://github.com/micmath/micmath.github.com>  
 JSDoc User's Group: <http://groups.google.com/group/jsdoc-users>  
-Subversion Mirror: <http://code.google.com/p/jsdoc/source>  
+JSDoc3 Ant Task <https://github.com/jannon/jsdoc3-ant-task>  
 Project Annoncements: <http://twitter.com/jsdoc3>
 
 License
