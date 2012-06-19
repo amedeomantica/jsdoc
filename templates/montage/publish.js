@@ -59,7 +59,7 @@
      */
     publish = function(data, opts, tutorials) {
         var out = '',
-            view = new template.Template(__dirname + '/templates/montage_2/tmpl');
+            view = new template.Template(__dirname + '/templates/montage/tmpl');
 
         // set up templating
         view.layout = 'layout.tmpl';
@@ -234,7 +234,7 @@
         fs.mkPath(outdir);
 
         // copy static files to outdir
-        var fromDir = __dirname + '/templates/montage_2/static',
+        var fromDir = __dirname + '/templates/montage/static',
             staticFiles = fs.ls(fromDir, 3);
 
         staticFiles.forEach(function(fileName) {

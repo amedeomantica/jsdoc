@@ -93,7 +93,7 @@ helper.createLink = function(doclet) {
      */
     publish = function(data, opts, tutorials) {
         var out = '',
-            view = new template.Template(__dirname + '/templates/screening_2/tmpl');
+            view = new template.Template(__dirname + '/templates/screening/tmpl');
 
         // set up templating
         view.layout = 'layout.tmpl';
@@ -309,7 +309,7 @@ helper.createLink = function(doclet) {
 <<<<<<< HEAD
         var fromDir = __dirname + '/templates/screening/static',
 =======
-        var fromDir = __dirname + '/templates/screening_2/static',
+        var fromDir = __dirname + '/templates/screening/static',
 >>>>>>> refs/remotes/origin/jsdoc-update
             staticFiles = fs.ls(fromDir, 3);
 
