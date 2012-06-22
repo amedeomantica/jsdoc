@@ -349,14 +349,17 @@
 
         var moduleNames = find({kind: 'module'});
         if (moduleNames.length) {
-            nav += '<h3>Modules</h3><ul>';
+            nav += '<h3>Modules</h3>';
+            nav += '<div id="modules-list">';
             moduleNames.sort(alphabetical);
+            nav += '<input id="search" class="search" placeholder="Filter by name" /><ul class=\"list\">';            
             moduleNames.forEach(function(m) {
                 if ( !seen.hasOwnProperty(m.longname) ) nav += '<li>'+linkto(m.longname, m.name)+'</li>';
                 seen[m.longname] = true;
             });
 
             nav += '</ul>';
+            nav += '</div>';
         }
 
 
