@@ -6,6 +6,8 @@
 
     <script src="http://shjs.sourceforge.net/sh_main.min.js"> </script>
     <script src="http://shjs.sourceforge.net/lang/sh_javascript.min.js"> </script>
+    <script type="text/javascript" src="list.js"></script>
+    
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -59,5 +61,17 @@
 </footer>
 
 <script> sh_highlightDocument(); </script>
+<script>
+// The name of the class applied to each </a> element in the list.
+var options = {
+    valueNames: ['prototype']
+};
+
+var classList = new List('class-list', options);
+var modulesList = new List('modules-list', options);
+var globalList = new List('globals-list', options);
+
+
+</script>
 </body>
 </html>

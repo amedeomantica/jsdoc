@@ -334,9 +334,9 @@
         }
 
         var externalNames = find({kind: 'external'});
-        nav = nav + '<h3>Externals</h3>';
-        nav += '<div id="externals-list">';
         if (externalNames.length) {
+            nav = nav + '<h3>Externals</h3>';
+            nav += '<div id="externals-list">';
             externalNames.sort(alphabetical);
             nav += '<input id="search" class="search" placeholder="Filter by name" /><ul class=\"list\">';
             externalNames.forEach(function(e) {
@@ -344,8 +344,8 @@
                 seen[e.longname] = true;
             });
             nav += '</ul>';
+            nav += '</div>';
         }
-        nav += '</div>';
 
         var moduleNames = find({kind: 'module'});
         if (moduleNames.length) {
