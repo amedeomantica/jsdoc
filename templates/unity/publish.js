@@ -16,29 +16,6 @@
 
 
     var containers = ['class', 'module', 'external', 'namespace', 'mixin'];
-    /**
-     * Turn a doclet into a URL.
-     */
-    helper.createLink = function(doclet) {
-        var url = '', longname, filename;
-
-        if (containers.indexOf(doclet.kind) < 0) {
-            longname = doclet.longname;
-            filename = longname.replace(/[^a-zA-Z 0-9 ]+/g,"_");
-
-            url = filename + helper.fileExtension + '#' + getNamespace(doclet.kind) + doclet.name;
-        }
-        else {
-            longname = doclet.longname;
-            filename = longname.replace(/[^a-zA-Z 0-9 ]+/g,"_");
-
-            url = filename + helper.fileExtension;
-        }
-
-        return url;
-    };
-
-//END Customizing so that we have reasonably-good-filenames
 
     var alphabetical = function(m1, m2){
         var nameA = m1.name.toLowerCase(), nameB = m2.name.toLowerCase();
@@ -65,9 +42,16 @@
         var product;
         if(opts.query) {
             product = opts.query.product;
-            console.log("product " + product);
+            if ((product === "montage") || (product === "screening")) {
+                console.log("\tBuilding docs for: " + product);
+            } else {
+                console.log("\tInvalid product specified '" + product + "'.");
+                return;
+            }
         } else {
-            console.log("No product specified in --query parameter.")
+            console.log("\n\tNo product specified in --query parameter. Example usage: ");
+            console.log("\t./jsdoc -t templates/unity -q product=montage -r ../montage/core ../montage/ui ../montage/data");
+            return;
         }
 
         var out = '',
@@ -251,9 +235,7 @@
 
 
         staticFiles.forEach(function(fileName) {
-            console.log(fromDir, outdir)
             var toDir = fs.toDir(fileName.replace(fromDir, outdir));
-            console.log("toDir", toDir)
             fs.mkPath(toDir);
             fs.copyFile(fileName, toDir);
         });
@@ -408,9 +390,9 @@
 
         var globalNames = find({kind: ['member', 'function', 'constant', 'typedef'], 'memberof': {'isUndefined': true}});
 
-        nav = nav + '<h3>Globals</h3>';
-        nav += '<div id="globals-list">';
         if (globalNames.length) {
+            nav = nav + '<h3>Globals</h3>';
+            nav += '<div id="globals-list">';
             nav += '<input id="search" class="search" placeholder="Filter by name" /><ul class=\"list\">';
 
             globalNames.forEach(function(g) {
@@ -419,9 +401,9 @@
             });
 
             nav += '</ul>';
+            nav += '</div>';
         }
 
-        nav += '</div>';
 
         // add template helpers
         view.find = find;
@@ -472,10 +454,6 @@
 
         function generateIndex(title, filename) {
             var classes = find({kind: 'class', longname: longname});
-
-            for (var foo in classes) {
-                console.log(foo);
-            };
 
             var data = {
                 title: title,

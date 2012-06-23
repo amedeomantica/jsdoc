@@ -45,13 +45,13 @@ exports.createLink = function(doclet) {
     
     if (containers.indexOf(doclet.kind) < 0) {
         var longname = doclet.longname,
-            filename = strToFilename(doclet.memberof || exports.globalName);
+            filename = removeSpacesFromFileName(doclet.memberof || exports.globalName);
         
         url = filename + exports.fileExtension + '#' + getNamespace(doclet.kind) + doclet.name;
     }
     else {
         var longname = doclet.longname,
-            filename = strToFilename(longname);
+            filename = removeSpacesFromFileName(longname);
         
         url = filename + exports.fileExtension;
     }
@@ -77,6 +77,10 @@ function strToFilename(str) {
         return hash.hex_md5(str).substr(0, 10);
     }
     return makeFilenameUnique(basename, str);
+}
+
+function removeSpacesFromFileName(longname) {
+    return longname.replace(/[^a-zA-Z 0-9 ]+/g,"_");
 }
 
 var files = {};
