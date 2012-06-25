@@ -182,14 +182,13 @@ function main() {
             }
         },
         resolver,
-        fs = require('fs');
+        fs = require('fs'),
+        Config = require('jsdoc/config');
 
     env.opts = jsdoc.opts.parser.parse(env.args);
 
     try {
-        env.conf = JSON.parse(
-            fs.readFileSync( env.opts.configure || __dirname + '/conf.json' )
-        );
+        env.conf = new Config( fs.readFileSync( env.opts.configure || __dirname + '/conf.json' ) ).get();
     }
     catch (e) {
         try {
@@ -238,10 +237,16 @@ function main() {
         installPlugins(env.conf.plugins);
     }
 
-    // any source file named package.json is treated special
+    // any source file named package.json or README.md is treated special
     for (var i = 0, l = env.opts._.length; i < l; i++ ) {
         if (/\bpackage\.json$/i.test(env.opts._[i])) {
             packageJson = require('fs').readFileSync( env.opts._[i] );
+            env.opts._.splice(i--, 1);
+        }
+        
+        if (/(\bREADME|\.md)$/i.test(env.opts._[i])) {
+            var readme = require('jsdoc/readme');
+            env.opts.readme = new readme(env.opts._[i]).html;
             env.opts._.splice(i--, 1);
         }
     }
