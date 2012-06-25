@@ -296,7 +296,8 @@ function main() {
             resolver.resolve();
         }
 
-        env.opts.template = env.opts.template || 'templates/default';
+        // env.opts.template = env.opts.template || 'templates/default';
+        env.opts.template = env.opts.template || 'templates/unity';
 
         // should define a global "publish" function
         include(env.opts.template + '/publish.js');
