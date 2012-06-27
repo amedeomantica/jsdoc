@@ -63,8 +63,8 @@ By default, the generated HTML files are placed in a folder called "out" in the 
 
 For example, to build the Montage docs
 
-> ` ./jsdoc -q product=montage -d out/montage ../montage/core ../montage/ui ../montage/data`
+` ./jsdoc -q product=montage -d out/montage ../montage/core ../montage/ui ../montage/data`
 
 Or, to build the Screening docs: 
 
-> ` ./jsdoc -q product=screening -d out/screening  ../server/lib/agents-webdriver/agent.js ../server/lib/agents-webdriver/component.js ../server/lib/agents-webdriver/element.js ../server/lib/testcase/script.js ../server/lib/testcase/assert.js`
+` ./jsdoc -q product=screening -d out/screening  ../server/lib/agents-webdriver/agent.js ../server/lib/agents-webdriver/component.js ../server/lib/agents-webdriver/element.js ../server/lib/testcase/script.js ../server/lib/testcase/assert.js`
