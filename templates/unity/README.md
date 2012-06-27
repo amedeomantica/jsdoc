@@ -67,9 +67,11 @@ For example, to build the Montage docs
 
 Or, to build the Screening docs: 
 
-` ./jsdoc -q product=screening -d out/screening  
+<pre>
+./jsdoc -q product=screening -d out/screening
            ../server/lib/agents-webdriver/agent.js 
            ../server/lib/agents-webdriver/component.js 
            ../server/lib/agents-webdriver/element.js 
            ../server/lib/testcase/script.js 
-           ../server/lib/testcase/assert.js`
+           ../server/lib/testcase/assert.js
+</pre>
