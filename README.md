@@ -1,110 +1,77 @@
-JSDoc 3 for Montage and Screening
-=======
+# Unity template
 
-This is a fork of JSDoc 3, an API documentation generator, to support Montage and Screening products. 
+Unity is a JSDoc template for generating both Montage and Screening docs. A command line parameter specifies which product's docs you want to build. Based on this input, the publish process chooses the apprpropriate template pieces. Each product has two customized templates whose file names are pre-pended with the product name:
 
-### Pull Requesters: Please read HOW_TO_CONTRIBUTE.md 
+* _product_-layout.tmpl
+* _product_-index.tmpl
 
-Installation
-------------
-
-
-To test that jsdoc is working, change your working directory to the jsdoc folder
-and run the following command on Windows:
-
-```git clone git@github.com:Motorola-Mobility/jsdoc.git```
-
-... or on a Max OSX or *nix platform:
-
-    ./jsdoc -T
-
-If you can't get the short-form commands to work, try invoking Java directly:
-
-    java -cp lib/js.jar org.mozilla.javascript.tools.shell.Main \
-    -modules node_modules -modules rhino_modules -modules . \
-    jsdoc.js -T
-
-Usage
------
-
-**To generate the entire Montage API doc set**:
-
-```./jsdoc -t templates/tetsubo/ -r ../montage/core/ ..montage/ui/ ../montage/data/```
-
-**To generate docs for a single file**:
-
-```./jsdoc -t templates/tetsubo/ ../montage/core/core.js```
-
-**To generate docs for files in a single folder**:
-
-```./jsdoc -t templates/tetsubo/ -r ../montage/ui/rich-text-component```
- 
-**To generate Screening docs**: 
-
-<pre>./jsdoc -t templates/screening ../screening/server/lib/agents-webdriver/agent.js 
-                            ../screening/server/lib/agents-webdriver/component.js 
-                            ../screening/server/lib/agents-webdriver/element.js 
-                            ../screening/server/lib/testcase/script.js
-</pre>                            `
-
-By default, HTML output is copied to the ```jsdoc/out``` folder. You can specify another output directory with the ```-d destfolder/``` option.
-
-* Any errors that occur during generation will be reported in the terminal. 
-* No console output means the build succeeded. 
+In JSDoc parlance these are "template partials" that are rendered during the publish process. Each product's  \*-layout.tmpl partial defines the overall layout for each product page, includes product-specific CSS files, and defines Google analytics. The \*-index.tmpl partials contain the static content (overview, frontmatter, whatever) for each product. 
 
 
-Dependencies
-------------
+* montage-layout.tmpl -- Main layout template for Montage; includes "/static/**montage**/styles/jsdoc-default.css".
+* screening-layout.tmpl -- Main layout template for Montage; includes "/static/**screening**/styles/jsdoc-default.css".
+* montage-index.tmpl -- Static index page content for Montage.
+* screening-index.tmpl -- Static index page content for Screening.
 
-JSDoc 3 utilises the Mozilla Rhino engine, which requires Java. JSDoc 3 is known
-to work with version 1.6.0_24 of Java.
+TODO: Currently, the two CSS files are identical except for the image logo added to the `h1` selector (logo.png). This isn't ideal as each CSS change requires updating two files. Fixme.
 
-JSDoc 3 uses advanced features in the Rhino application which are only
-available in or after the 1.7 release 3. A copy of this version of Rhino is
-included in JSDoc so this is not normally an issue that the user needs to be
-concerned with. However, in rare cases, users may have their Java CLASSPATH
-configured to override that included Rhino and point to some older version of
-Rhino instead. If this is the case, simply correct the CLASSPATH to remove the
-older Rhino.
+Below is a snapshot of the Unity template's file/folder structure:
 
-The version of rhino distributed with JSDoc3 can be found here:  https://github.com/jannon/rhino
+<pre>        
+├── static
+│   ├── montage
+│   │   └── styles
+│   │       ├── jsdoc-default.css
+│   │       ├── list.js
+│   │       ├── logo.png
+│   │       └── node-dark.css
+│   └── screening
+│       └── styles
+│          ├── jsdoc-default.css
+│          ├── list.js
+│          ├── logo.png
+│          └── node-dark.css
+└── tmpl
+    ├── montage-index.tmpl
+    ├── montage-layout.tmpl
+    ├── screening-index.tmpl
+    ├── screening-layout.tmpl
+    ├── container.tmpl
+    ├── method.tmpl
+    ├── params.tmpl
+    ├── properties.tmpl
+    ├── returns.tmpl
+    ├── details.tmpl
+    ├── example.tmpl
+    ├── examples.tmpl
+    ├── exceptions.tmpl
+    ├── fires.tmpl
+    ├── members.tmpl
+    ├── summary_table.tmpl
+    └── tutorial.tmpl
+</pre>
 
-Debugging
----------
+## Usage
 
-Rhino is not always very friendly when it comes to reporting errors in
-JavaScript. Luckily it comes with a full-on debugger included that can be much
-more useful than a simple stack trace. To invoke JSDoc with the debugger do the following:
+The following steps assume that the JSDoc and Montage distributions are located in the same directory (e.g. `/repos/montage` and `/repos/jsdoc`). If your environment is set up differently you will need to adjust your paths accordingly.
 
-    jsdoc --debug
+To use the Unity template, you include a `-q` (or --query) parameter when invoking JSDoc, followed by `product=<product-name>` parameter where `<product-name>` is either **montage** or **screening**. The product name is used to customized what template partials are included in the build.
 
-or the long form version:
+By default, the system uses the /templates/unity JSDoc template, so you don't have to specify a template. If you want to use another template, you must specify it with the `-t` template option on the command line.
 
-    $ java -classpath lib/js.jar \
-    org.mozilla.javascript.tools.debugger.Main -debug \
-    -modules node_modules -modules rhino_modules -modules . \
-    jsdoc.js \
-    your/script.js
+By default, the generated HTML files are placed in a folder called "out" in the JSDoc folder. To specify a folder, use the `-d` command line option
 
-Note: ```--debug``` must be the first argument to the short form command
+For example, to build the Montage docs
 
-This will open a debugging window. Choose "Break on Exceptions" from the "Debug"
-menu, then press the "Run" button. If there is an error, you should see exactly
-where it is in the source code.
+` ./jsdoc -q product=montage -d out/montage ../montage/core ../montage/ui ../montage/data`
 
-See Also
---------
+Or, to build the Screening docs: 
 
-Project Documentation: <http://usejsdoc.org/> (under development)  
-Project Documentation Source: <https://github.com/micmath/micmath.github.com>  
-JSDoc User's Group: <http://groups.google.com/group/jsdoc-users>  
-JSDoc3 Ant Task <https://github.com/jannon/jsdoc3-ant-task>  
-Project Annoncements: <http://twitter.com/jsdoc3>
-
-License
--------
-
-JSDoc 3 is copyright (c) 2011 Michael Mathews <micmath@gmail.com>
-
-See file "LICENSE.md" in this distribution for more details about
-terms of use.
+<pre>
+./jsdoc -q product=screening -d out/screening
+           ../server/lib/agents-webdriver/agent.js 
+           ../server/lib/agents-webdriver/component.js 
+           ../server/lib/agents-webdriver/element.js 
+           ../server/lib/testcase/script.js 
+           ../server/lib/testcase/assert.js
+</pre>
