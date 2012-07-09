@@ -68,49 +68,90 @@
 
 
         <?js
-            var members = self.find({kind: 'member', memberof: doc.longname});
+            var members = self.find({kind: 'member', memberof: doc.longname, inherited: {isUndefined: true}});
             if (title === 'Globals') {
                 members = self.find({kind: 'member', memberof: {isUndefined: true}});
             }
-            if (members && members.length && members.forEach) {
+            var inheritedMembers = self.find({kind: 'member', memberof: doc.longname, inherited: true});
+
+            if (members.length || inheritedMembers.length) {
         ?>
 
-
-        <!-- <h3 class="subsection-title">Property summary</h3> -->
-            <table class="zebra-striped list">
+            <!-- <h3 class="subsection-title">Property summary</h3> -->
+            <table class="zebra-striped list properties">
                 <th colspan=2 align=left>Properties</th>
                 <?js
-                members.forEach(function(m) {
-                    print(self.partial('summary_table.tmpl', m));
-                });
+                if (members && members.length && members.forEach) {
+
+                    members.forEach(function(m) {
+                        print(self.partial('summary_table.tmpl', m));
+                    });
+
+                }
+
+                if (inheritedMembers && inheritedMembers.length && inheritedMembers.forEach) {
+                    ?>
+                    <tr class="inherited"><th>Inherited</th> <td>
+                        <?js
+                            inheritedMembers.forEach(function(m, i) {
+                                if (i !== 0) {
+                                    print(", ");
+                                }
+                                print(self.linkto(m.inherits, m.name));
+                            });
+                        ?>
+                    </td></tr>
+                    <?js
+                }
             ?>
             </table>
 
         <?js } ?>
 
-
         <!-- Summary table: Method-->
 
         <?js
-            var functions = self.find({kind: 'function', memberof: doc.longname});
+            var methods = self.find({kind: 'function', memberof: doc.longname, inherited: {isUndefined: true}});
             if (title === 'Globals') {
-                functions = self.find({kind: 'function', memberof: {isUndefined: true}});
+                methods = self.find({kind: 'function', memberof: {isUndefined: true}});
             }
-            if (functions && functions.length && functions.forEach) {
+
+            var inheritedMethods = self.find({kind: 'function', memberof: doc.longname, inherited: true});
+
+            if (methods.length || inheritedMethods.length) {
+
         ?>
 
 <!--             <h3 class="subsection-title">Method summary</h3> -->
 
 
-            <table class="zebra-striped">
+            <table class="zebra-striped methods">
                 <th colspan=2 align=left>Methods</th>
                 <?js
-                functions.forEach(function(m) {
-                    if (doc.kind === 'class' || doc.kind === 'external') {
-                        m.className = doc.name;
-                    }
-                    print(self.partial('summary_table.tmpl', m));
-                });
+                if (methods && methods.length && methods.forEach) {
+
+                    methods.forEach(function(m) {
+                        if (doc.kind === 'class' || doc.kind === 'external') {
+                            m.className = doc.name;
+                        }
+                        print(self.partial('summary_table.tmpl', m));
+                    });
+                }
+
+                if (inheritedMethods && inheritedMethods.length && inheritedMethods.forEach) {
+                    ?>
+                    <tr class="inherited"><th>Inherited</th> <td>
+                        <?js
+                            inheritedMethods.forEach(function(m, i) {
+                                if (i !== 0) {
+                                    print(", ");
+                                }
+                                print(self.linkto(m.inherits, m.name));
+                            });
+                        ?>
+                    </td></tr>
+                    <?js
+                }
             ?>
             </table>
 
@@ -165,7 +206,6 @@
     <?js } ?>
 
     <?js
-        var members = self.find({kind: 'member', memberof: title === 'Globals'? {isUndefined: true} : doc.longname});
         if (members && members.length && members.forEach) {
     ?>
         <h3 class="subsection-title">Members</h3>
@@ -176,7 +216,6 @@
     <?js } ?>
 
     <?js
-        var methods = self.find({kind: 'function', memberof: title === 'Globals'? {isUndefined: true} : doc.longname});
         if (methods && methods.length && methods.forEach) {
     ?>
         <h3 class="subsection-title">Methods</h3>
