@@ -69,9 +69,9 @@ Or, to build the Screening docs:
 
 <pre>
 ./jsdoc -q product=screening -d out/screening
-           ../server/lib/agents-webdriver/agent.js 
-           ../server/lib/agents-webdriver/component.js 
-           ../server/lib/agents-webdriver/element.js 
-           ../server/lib/testcase/script.js 
-           ../server/lib/testcase/assert.js
+           ../screening/server/lib/agents-webdriver/agent.js 
+           ../screening/server/lib/agents-webdriver/component.js 
+           ../screening/server/lib/agents-webdriver/element.js 
+           ../screening/server/lib/testcase/script.js 
+           ../screening/server/lib/testcase/assert.js
 </pre>
